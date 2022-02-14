@@ -1,15 +1,15 @@
 .container {
   display: grid;
-  grid-template-columns: 0.3fr 2.4fr 0.3fr;
-  grid-template-rows: 0.6fr 1.9fr 0.5fr;
+  grid-template-columns: 0.4fr 2.2fr 0.4fr;
+  grid-template-rows: 0.5fr 2fr 0.5fr;
   grid-auto-rows: 1fr 1fr;
   gap: 0px 0px;
   grid-auto-flow: row;
   justify-content: stretch;
   grid-template-areas:
     ". . ."
-    ". board ."
-    ". . .";
+    "guesslist1 board guesslist2"
+    ". gamebuttons .";
 }
 
 .board {
@@ -23,7 +23,7 @@
     "move-area-1 event-area move-area-3"
     "start-spot move-area-4 question";
   grid-area: board;
-  border: 1px solid black;
+  border: solid black 1px;
 }
 
 .event-area {
@@ -37,35 +37,67 @@
     "event-card info-area info-area"
     "score-area score-area score-area";
   grid-area: event-area;
-  border: black solid 1px;
+  border: solid black 1px;
 }
 
 .title {
   grid-area: title;
   text-align: center;
-  font-size: 1.5em;
 }
 
 .score-area {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr 1fr;
+  grid-template-rows: 1.4fr 0.1fr 1.5fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "player1name player1name player1score"
+    ". . ."
+    "player2name player2name player2score";
   grid-area: score-area;
-  border-top: black solid 1px;
-  overflow: hidden;
-  text-align: left;
-  ;
+  border-top: 1px solid black;
 }
 
-p {
-  padding-top: 20px;
+.player1name {
+  grid-area: player1name;
+  text-align: center;
+}
+
+.player2name {
+  grid-area: player2name;
+  text-align: center;
+}
+
+.player1score {
+  grid-area: player1score;
+  text-align: center;
+}
+
+.player2score {
+  grid-area: player2score;
+  text-align: center;
 }
 
 .event-card {
+  display: grid;
+  grid-template-columns: 0.9fr 1.2fr 0.9fr;
+  grid-template-rows: 0.6fr 1.8fr 0.6fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    ". . ."
+    ". card ."
+    ". . .";
   grid-area: event-card;
+}
+
+.card {
+  grid-area: card;
 }
 
 .info-area {
   grid-area: info-area;
-  border-top: black solid 2px;
-  border-left: black solid 2px;
 }
 
 .move-area-1 {
@@ -83,17 +115,18 @@ p {
 
 .m1 {
   grid-area: m1;
-  border: 0.1px solid black;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .m2 {
   grid-area: m2;
-  border: 0.1px solid black;
+  border-top: 1px solid black;
 }
 
 .m3 {
   grid-area: m3;
-  border: 0.1px solid black;
+  border-top: 1px solid black;
 }
 
 .move-area-2 {
@@ -111,17 +144,18 @@ p {
 
 .m4 {
   grid-area: m4;
-  border: 0.1px solid black;
+  border-left: 1px solid black;
 }
 
 .m5 {
   grid-area: m5;
-  border: 0.1px solid black;
+  border-left: 1px solid black;
 }
 
 .m6 {
   grid-area: m6;
-  border: 0.1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black
 }
 
 .move-area-3 {
@@ -139,17 +173,18 @@ p {
 
 .m7 {
   grid-area: m7;
-  border: 0.1px solid black;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
 }
 
 .m8 {
   grid-area: m8;
-  border: 0.1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .m9 {
   grid-area: m9;
-  border: 0.1px solid black;
+  border-bottom: 1px solid black;
 }
 
 .move-area-4 {
@@ -167,40 +202,71 @@ p {
 
 .m10 {
   grid-area: m10;
-  border: 0.1px solid black;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
 }
 
 .m11 {
   grid-area: m11;
-  border: 0.1px solid black;
+  border-left: 1px solid black;
 }
 
 .m12 {
   grid-area: m12;
-  border: 0.1px solid black;
+  border-left: 1px solid black;
 }
 
 .start-spot {
   grid-area: start-spot;
-  border: 0.1px solid black;
 }
 
 .jail {
   grid-area: jail;
-  border: 0.1px solid black;
 }
 
 .event {
   grid-area: event;
-  border: 0.1px solid black;
 }
 
 .question {
   grid-area: question;
-  border: 0.1px solid black;
 }
 
+.guesslist1 {
+  grid-area: guesslist1;
+}
 
+.guesslist2 {
+  grid-area: guesslist2;
+}
+
+.gamebuttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    ". . ."
+    "startgame guessEntry resetgame"
+    ". . .";
+  grid-area: gamebuttons;
+}
+
+.startgame {
+  grid-area: startgame;
+  text-align: center;
+}
+
+.resetgame {
+  grid-area: resetgame;
+  text-align: center;
+}
+
+.guessEntry {
+  grid-area: guessEntry;
+  text-align: center;
+}
 html,
 body,
 .container {
