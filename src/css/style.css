@@ -12,7 +12,7 @@
     ". gamebuttons .";
 }
 
-.board {
+#board {
   display: grid;
   grid-template-columns: 0.5fr 2fr 0.5fr;
   grid-template-rows: 0.5fr 2fr 0.5fr;
@@ -26,7 +26,7 @@
   border: solid black 1px;
 }
 
-.event-area {
+#event-area {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -40,12 +40,12 @@
   border: solid black 1px;
 }
 
-.title {
+#title {
   grid-area: title;
   text-align: center;
 }
 
-.score-area {
+#score-area {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr 1fr;
   grid-template-rows: 1.4fr 0.1fr 1.5fr;
@@ -59,27 +59,27 @@
   border-top: 1px solid black;
 }
 
-.player1name {
+#player1name {
   grid-area: player1name;
   text-align: center;
 }
 
-.player2name {
+#player2name {
   grid-area: player2name;
   text-align: center;
 }
 
-.player1score {
+#player1score {
   grid-area: player1score;
   text-align: center;
 }
 
-.player2score {
+#player2score {
   grid-area: player2score;
   text-align: center;
 }
 
-.event-card {
+#event-card {
   display: grid;
   grid-template-columns: 0.9fr 1.2fr 0.9fr;
   grid-template-rows: 0.6fr 1.8fr 0.6fr;
@@ -92,15 +92,15 @@
   grid-area: event-card;
 }
 
-.card {
+#card {
   grid-area: card;
 }
 
-.info-area {
+#info-area {
   grid-area: info-area;
 }
 
-.move-area-1 {
+#move-area-1 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -113,23 +113,23 @@
   grid-area: move-area-1;
 }
 
-.m1 {
+#m1 {
   grid-area: m1;
   border-top: 1px solid black;
   border-bottom: 1px solid black;
 }
 
-.m2 {
+#m2 {
   grid-area: m2;
   border-top: 1px solid black;
 }
 
-.m3 {
+#m3 {
   grid-area: m3;
   border-top: 1px solid black;
 }
 
-.move-area-2 {
+#move-area-2 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -142,23 +142,23 @@
   grid-area: move-area-2;
 }
 
-.m4 {
+#m4 {
   grid-area: m4;
   border-left: 1px solid black;
 }
 
-.m5 {
+#m5 {
   grid-area: m5;
   border-left: 1px solid black;
 }
 
-.m6 {
+#m6 {
   grid-area: m6;
   border-left: 1px solid black;
   border-right: 1px solid black
 }
 
-.move-area-3 {
+#move-area-3 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -171,23 +171,23 @@
   grid-area: move-area-3;
 }
 
-.m7 {
+#m7 {
   grid-area: m7;
   border-bottom: 1px solid black;
   border-top: 1px solid black;
 }
 
-.m8 {
+#m8 {
   grid-area: m8;
   border-bottom: 1px solid black;
 }
 
-.m9 {
+#m9 {
   grid-area: m9;
   border-bottom: 1px solid black;
 }
 
-.move-area-4 {
+#move-area-4 {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -200,47 +200,47 @@
   grid-area: move-area-4;
 }
 
-.m10 {
+#m10 {
   grid-area: m10;
   border-right: 1px solid black;
   border-left: 1px solid black;
 }
 
-.m11 {
+#m11 {
   grid-area: m11;
   border-left: 1px solid black;
 }
 
-.m12 {
+#m12 {
   grid-area: m12;
   border-left: 1px solid black;
 }
 
-.start-spot {
+#start-spot {
   grid-area: start-spot;
 }
 
-.jail {
+#jail {
   grid-area: jail;
 }
 
-.event {
+#event {
   grid-area: event;
 }
 
-.question {
+#question {
   grid-area: question;
 }
 
-.guesslist1 {
+#guesslist1 {
   grid-area: guesslist1;
 }
 
-.guesslist2 {
+#guesslist2 {
   grid-area: guesslist2;
 }
 
-.gamebuttons {
+#gamebuttons {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr 1fr;
@@ -253,17 +253,17 @@
   grid-area: gamebuttons;
 }
 
-.startgame {
+#startgame {
   grid-area: startgame;
   text-align: center;
 }
 
-.resetgame {
+#resetgame {
   grid-area: resetgame;
   text-align: center;
 }
 
-.guessEntry {
+#guessEntry {
   grid-area: guessEntry;
   text-align: center;
 }
