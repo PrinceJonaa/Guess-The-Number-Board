@@ -273,3 +273,12 @@ body,
   height: 100%;
   margin: 0;
 }
+
+#guessNumber {
+  text-align: center;
+  margin-top: 4px;
+}
+
+.fas {
+  width: 1px;
+}

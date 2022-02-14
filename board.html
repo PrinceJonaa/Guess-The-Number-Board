@@ -54,9 +54,23 @@
   <div id="guesslist1"></div>
   <div id="guesslist2"></div>
   <div id="gamebuttons">
-    <div id="startgame"><button id="startGameBtn">Start</button></div>
-    <div id="guessEntry"><form id="guessEntryForm"></form></div>
-    <div id="resetgame"><button id="resetBtn">Reset</button></div>
+    <div id="startgame"><button id="startGameBtn" class="btn btn-dark">Start</button></div>
+
+    <div id="guessEntry">
+      <form>
+      <div class="form-inline">
+        <div class="col-auto">
+          <input type="text" class="form-control" placeholder="Guess">
+        </div>
+        <div class="col-auto">
+          <input type="submit" class="form-control">
+    </div>
+  </div>
+</form>
+      
+    </div>
+
+    <div id="resetgame"><button id="resetBtn" class="btn btn-dark">Reset</button></div>
   </div>
 </div>
 </div>
