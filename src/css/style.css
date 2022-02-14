@@ -1,0 +1,171 @@
+.container {
+  display: grid;
+  grid-template-columns: 0.3fr 2.4fr 0.3fr;
+  grid-template-rows: 0.6fr 1.9fr 0.5fr;
+  grid-auto-rows: 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  justify-content: stretch;
+  grid-template-areas:
+    ". . ."
+    ". board ."
+    ". . .";
+}
+
+.board {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 0.5fr;
+  grid-template-rows: 0.5fr 2fr 0.5fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "jail move-area-2 event"
+    "move-area-1 event-area move-area-3"
+    "start-spot move-area-4 question";
+  grid-area: board;
+}
+
+.event-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "title title title"
+    "event-card info-area info-area"
+    "score-area score-area score-area";
+  grid-area: event-area;
+}
+
+.title {
+  grid-area: title;
+}
+
+.score-area {
+  grid-area: score-area;
+}
+
+.event-card {
+  grid-area: event-card;
+}
+
+.info-area {
+  grid-area: info-area;
+}
+
+.move-area-1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "m3 m3 m3"
+    "m2 m2 m2"
+    "m1 m1 m1";
+  grid-area: move-area-1;
+}
+
+.m1 {
+  grid-area: m1;
+}
+
+.m2 {
+  grid-area: m2;
+}
+
+.m3 {
+  grid-area: m3;
+}
+
+.move-area-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "m4 m5 m6"
+    "m4 m5 m6"
+    "m4 m5 m6";
+  grid-area: move-area-2;
+}
+
+.m4 {
+  grid-area: m4;
+}
+
+.m5 {
+  grid-area: m5;
+}
+
+.m6 {
+  grid-area: m6;
+}
+
+.move-area-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "m7 m7 m7"
+    "m8 m8 m8"
+    "m9 m9 m9";
+  grid-area: move-area-3;
+}
+
+.m7 {
+  grid-area: m7;
+}
+
+.m8 {
+  grid-area: m8;
+}
+
+.m9 {
+  grid-area: m9;
+}
+
+.move-area-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "m12 m11 m10"
+    "m12 m11 m10"
+    "m12 m11 m10";
+  grid-area: move-area-4;
+}
+
+.m10 {
+  grid-area: m10;
+}
+
+.m11 {
+  grid-area: m11;
+}
+
+.m12 {
+  grid-area: m12;
+}
+
+.start-spot {
+  grid-area: start-spot;
+}
+
+.jail {
+  grid-area: jail;
+}
+
+.event {
+  grid-area: event;
+}
+
+.question {
+  grid-area: question;
+}
