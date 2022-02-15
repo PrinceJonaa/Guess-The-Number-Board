@@ -67,12 +67,17 @@ function startGame() {
 let playerScore = function() {
   if (player1win == true) {
     player1score.innerHtml += 1;
-  } else (player2win == true) {
+  } else if (player2win == true) {
     player2score.innerHtml += 1;
   }
 }
 
-
+let playerWin = function() {
+  if (player1guess == secretNum) {
+    player1win = true;
+  } else if (player2guess == secretNum)
+    player2win = true;
+}
 
 
 
