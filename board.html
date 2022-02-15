@@ -62,16 +62,12 @@
     <div id="gamebuttons">
       <div id="startgame"><button id="startGameBtn" class="btn btn-dark">Start</button></div>
       <div id="guessEntry">
-        <form>
-          <div class="form-inline">
-            <div class="col">
-              <input type="text" class="form-control" placeholder="Guess">
-            </div>
-            <div class="col">
-              <input id="guessSubmit" type="submit" class="form-control">
-            </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <input type="text" class="form-control" id="guessInput">
           </div>
-        </form>
+          <button class="btn btn-dark" type="button" id="guessSubmit">Submit</button>
+        </div>
       </div>
       <div id="resetgame"><button id="resetBtn" class="btn btn-dark">Reset</button></div>
     </div>

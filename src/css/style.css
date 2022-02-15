@@ -285,6 +285,11 @@ div.col {
   flex-direction: row;
 }
 
+#submitGuess {
+  text-align: center;
+  margin: 15px auto;
+}
+
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {}
 
@@ -316,11 +321,3 @@ only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (
 /* Retina displays ----------- */
 @media only screen and (-webkit-min-device-pixel-ratio : 2),
 only screen and (min-resolution: 192dpi) {}
-
-.animate__bounce {
-  animation-name: animate__bounce;
-  animation-duration: 1s;
-  animation-timing-function: ease-in-out;
-  animation-iteration-count: infinite;
-  animation-direction: alternate;
-}
