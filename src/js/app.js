@@ -30,7 +30,8 @@ const StartGame = document.getElementById('startGameBtn')
 const guessEntryArea = document.getElementById('guessEntryForm')
 const resetBtn = document.getElementById('resetBtn')
 const guessNumber = document.getElementById('guessNumber')
-
+const player1score = document.getElementById('player1score')
+const player2score = document.getElementById('player2score')
 //=========================
 
 
@@ -44,42 +45,42 @@ function boardLocation() {
   window.location.href = "/board.html";
 }
 
-function guessTheNumber() {
-  let randomNumber = Math.floor(Math.random() * 100) + 1;
-  let guess = guessNumber.value;
-  if (randomNumber == guess)
-  {
-    alert ("you won")
-  }
-  else if (guess > randomNumber)
-  {
-    guess++;
-    alert('small number')
-  }
-  else
-  {
-    guess++;
-    alert('greater number')
+
+function startGame() {
+  startGameBtn.addEventListener('click',
+  )
+}
+
+// let guessTheNumber() {
+//   guessEntryArea.addEventListener('submit', function(event) {
+//     event.preventDefault();
+//     let guess = guessNumber.value;
+//     if (guess == number) {
+//       alert('You Win!')
+//     } else {
+//       alert('You Lose!')
+//     }
+//   }
+//   )
+// }
+
+let playerScore = function() {
+  if (player1win == true) {
+    player1score.innerHtml += 1;
+  } else (player2win == true) {
+    player2score.innerHtml += 1;
   }
 }
-// function guessTheNumber() {
-//   var randomNumber = Math.floor(Math.random() * 100) + 1;
-//   var guess = document.getElementById("guess").value;
-//   var guessNumber = parseInt(guess);
-//   var guessCount = 0;
-//   var guessList = document.getElementById("guessList");
-//   var guessListItem = document.createElement("li");
-//   var guessListText = document.createTextNode(guess);
-//   guessListItem.appendChild(guessListText);
-//   guessList.appendChild(guessListItem);
-//   guessCount++;
-//   if (guessNumber === randomNumber) {
-//     alert("You Win!");
-//   }
-//   else if (guessCount === 5) {
-//     alert("You Lose!");
-//   }
-//   else {
-//     guessTheNumber();
-//   }
-// }
+
+
+
+
+
+// let guessListIdx1 = [1];
+// let guessListIdx2 = [2];
+// const p1lastGuess = guessListIdx1[guessListIdx1.length - 1];
+// const p2lastGuess = guessListIdx2[guessListIdx2.length - 1];
+// guessList1.textContent = guessListIdx1;
+// guessList2.textContent = guessListIdx2;
+// secretNum = Math.floor(Math.random() * 100 + 1);
+// resetBtn.setAttribute("hidden", true);
