@@ -1,0 +1,323 @@
+.container {
+  display: grid;
+  grid-template-columns: 0.4fr 2.2fr 0.4fr;
+  grid-template-rows: 0.5fr 2fr 0.5fr;
+  grid-auto-rows: 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  justify-content: stretch;
+  grid-template-areas:
+    ". . ."
+    "guesslist1 board guesslist2"
+    ". gamebuttons .";
+}
+
+#board {
+  display: grid;
+  grid-template-columns: 0.5fr 2fr 0.5fr;
+  grid-template-rows: 0.5fr 2fr 0.5fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "jail move-area-2 event"
+    "move-area-1 event-area move-area-3"
+    "start-spot move-area-4 question";
+  grid-area: board;
+  border: solid black 1px;
+}
+
+#event-area {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "title title title"
+    "event-card info-area info-area"
+    "score-area score-area score-area";
+  grid-area: event-area;
+  border: solid black 1px;
+}
+
+#title {
+  grid-area: title;
+  text-align: center;
+}
+
+#score-area {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr 1fr;
+  grid-template-rows: 1.4fr 0.1fr 1.5fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "player1name player1name player1score"
+    ". . ."
+    "player2name player2name player2score";
+  grid-area: score-area;
+  border-top: 1px solid black;
+}
+
+#player1name {
+  grid-area: player1name;
+  text-align: center;
+}
+
+#player2name {
+  grid-area: player2name;
+  text-align: center;
+}
+
+#player1score {
+  grid-area: player1score;
+  text-align: center;
+}
+
+#player2score {
+  grid-area: player2score;
+  text-align: center;
+}
+
+#event-card {
+  display: grid;
+  grid-template-columns: 0.9fr 1.2fr 0.9fr;
+  grid-template-rows: 0.6fr 1.8fr 0.6fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    ". . ."
+    ". card ."
+    ". . .";
+  grid-area: event-card;
+}
+
+#card {
+  grid-area: card;
+}
+
+#info-area {
+  grid-area: info-area;
+}
+
+#move-area-1 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "m3 m3 m3"
+    "m2 m2 m2"
+    "m1 m1 m1";
+  grid-area: move-area-1;
+}
+
+#m1 {
+  grid-area: m1;
+  border-top: 1px solid black;
+  border-bottom: 1px solid black;
+}
+
+#m2 {
+  grid-area: m2;
+  border-top: 1px solid black;
+}
+
+#m3 {
+  grid-area: m3;
+  border-top: 1px solid black;
+}
+
+#move-area-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "m4 m5 m6"
+    "m4 m5 m6"
+    "m4 m5 m6";
+  grid-area: move-area-2;
+}
+
+#m4 {
+  grid-area: m4;
+  border-left: 1px solid black;
+}
+
+#m5 {
+  grid-area: m5;
+  border-left: 1px solid black;
+}
+
+#m6 {
+  grid-area: m6;
+  border-left: 1px solid black;
+  border-right: 1px solid black
+}
+
+#move-area-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "m7 m7 m7"
+    "m8 m8 m8"
+    "m9 m9 m9";
+  grid-area: move-area-3;
+}
+
+#m7 {
+  grid-area: m7;
+  border-bottom: 1px solid black;
+  border-top: 1px solid black;
+}
+
+#m8 {
+  grid-area: m8;
+  border-bottom: 1px solid black;
+}
+
+#m9 {
+  grid-area: m9;
+  border-bottom: 1px solid black;
+}
+
+#move-area-4 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    "m12 m11 m10"
+    "m12 m11 m10"
+    "m12 m11 m10";
+  grid-area: move-area-4;
+}
+
+#m10 {
+  grid-area: m10;
+  border-right: 1px solid black;
+  border-left: 1px solid black;
+}
+
+#m11 {
+  grid-area: m11;
+  border-left: 1px solid black;
+}
+
+#m12 {
+  grid-area: m12;
+  border-left: 1px solid black;
+}
+
+#start-spot {
+  grid-area: start-spot;
+}
+
+#jail {
+  grid-area: jail;
+}
+
+#event {
+  grid-area: event;
+}
+
+#question {
+  grid-area: question;
+}
+
+#guesslist1 {
+  grid-area: guesslist1;
+}
+
+#guesslist2 {
+  grid-area: guesslist2;
+}
+
+#gamebuttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr 1fr;
+  gap: 0px 0px;
+  grid-auto-flow: row;
+  grid-template-areas:
+    ". . ."
+    "startgame guessEntry resetgame"
+    ". . .";
+  grid-area: gamebuttons;
+}
+
+#startgame {
+  grid-area: startgame;
+  text-align: center;
+}
+
+#resetgame {
+  grid-area: resetgame;
+  text-align: center;
+}
+
+#guessEntry {
+  grid-area: guessEntry;
+  text-align: center;
+}
+html,
+body,
+.container {
+  height: 100%;
+  margin: 0;
+}
+
+#guessNumber {
+  text-align: center;
+  margin-top: 4px;
+}
+
+div.col {
+  width: 1px;
+  display: flex;
+  flex-direction: row;
+}
+
+#submitGuess {
+  text-align: center;
+  margin: 15px auto;
+}
+
+/* Smartphones (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {}
+
+/* Smartphones (landscape) ----------- */
+@media only screen and (min-width : 321px) {}
+
+/* Smartphones (portrait) ----------- */
+@media only screen and (max-width : 320px) {}
+
+/* iPads (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {}
+
+/* iPads (landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {}
+
+/* iPads (portrait) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {}
+
+/* iPad 3 (portrait and landscape) ----------- */
+@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (-webkit-min-device-pixel-ratio : 2),
+only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (min-resolution: 192dpi) {}
+
+/* Desktops and laptops ----------- */
+@media only screen and (min-width : 1224px) {}
+
+/* Large screens ----------- */
+@media only screen and (min-width : 1824px) {}
+
+/* Retina displays ----------- */
+@media only screen and (-webkit-min-device-pixel-ratio : 2),
+only screen and (min-resolution: 192dpi) {}
