@@ -33,6 +33,12 @@ const guessNumber = document.getElementById('guessNumber')
 const player1score = document.getElementById('player1score')
 const player2score = document.getElementById('player2score')
 const guessSubmit = document.getElementById('guessSubmit')
+let player1guess = 0;
+let player2guess = 0;
+let player1win = false;
+let player2win = false;
+let playerTurn = 1
+
 //=========================
 
 
@@ -82,16 +88,30 @@ let playerWin = function() {
 
 let secretNum = Math.floor(Math.random() * 100) + 1;
 
+var number = 0;
+var playerTurn = 1;
+
 function displayTurn() {
-  if (player1turn == true) {
-    player1Name.classList.add("animate__animated", "animate__bounceOutLeft");
-    player1Name.setProperty('--animate-duration', '10s') 
-  } else if (player2turn == true) {
-    player1Name.classList.add("animate__animated", "animate__bounceOutLeft");
-    player2Name.setProperty("--animate-duration", "10s"); 
+  if (playerTurn % 2 == 0) {
+    player1win = true;
+  } else {
+    player2win = true;
   }
 }
 
+function incPlayerTurn() {
+  playerTurn++;
+}
+
+function play() {
+  displayTurn();
+
+  incPlayerTurn();
+}
+
+for (var i = 1; i <= 8; i++) {
+  play();
+  }
 
 
 // let guessListIdx1 = [1];
