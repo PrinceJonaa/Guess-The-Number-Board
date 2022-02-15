@@ -32,6 +32,7 @@ const resetBtn = document.getElementById('resetBtn')
 const guessNumber = document.getElementById('guessNumber')
 const player1score = document.getElementById('player1score')
 const player2score = document.getElementById('player2score')
+const guessSubmit = document.getElementById('guessSubmit')
 //=========================
 
 
@@ -77,6 +78,18 @@ let playerWin = function() {
     player1win = true;
   } else if (player2guess == secretNum)
     player2win = true;
+}
+
+let secretNum = Math.floor(Math.random() * 100) + 1;
+
+function displayTurn() {
+  if (player1turn == true) {
+    player1Name.classList.add("animate__animated", "animate__bounceOutLeft");
+    player1Name.setProperty('--animate-duration', '10s') 
+  } else if (player2turn == true) {
+    player1Name.classList.add("animate__animated", "animate__bounceOutLeft");
+    player2Name.setProperty("--animate-duration", "10s"); 
+  }
 }
 
 
