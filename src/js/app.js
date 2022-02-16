@@ -58,20 +58,6 @@ function guessSubmitMe() {
 guessSubmit.addEventListener("click", submitThis);
 }
 
-
-// let guessTheNumber() {
-//   guessEntryArea.addEventListener('submit', function(event) {
-//     event.preventDefault();
-//     let guess = guessNumber.value;
-//     if (guess == number) {
-//       alert('You Win!')
-//     } else {
-//       alert('You Lose!')
-//     }
-//   }
-//   )
-// }
-
 let playerScore = function() {
   if (player1win == true) {
     player1score.innerHtml += 1;
@@ -107,12 +93,6 @@ function incPlayerTurn() {
     play();
   }
 }
-
-
-
-// for (var i = 1; i <= 8; i++) {
-//   play();
-//   }
 
 function submitThis() {
   let guess = parseInt(guessInput.value);
