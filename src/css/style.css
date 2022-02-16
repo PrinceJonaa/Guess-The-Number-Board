@@ -321,3 +321,33 @@ only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (
 /* Retina displays ----------- */
 @media only screen and (-webkit-min-device-pixel-ratio : 2),
 only screen and (min-resolution: 192dpi) {}
+
+.slide-fwd-center {
+  -webkit-animation: slide-fwd-center 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s 5 both;
+  animation: slide-fwd-center 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s 5 both;
+}
+
+@-webkit-keyframes slide-fwd-center {
+  0% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  100% {
+    -webkit-transform: translateZ(160px);
+    transform: translateZ(160px);
+  }
+}
+
+@keyframes slide-fwd-center {
+  0% {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+
+  100% {
+    -webkit-transform: translateZ(160px);
+    transform: translateZ(160px);
+  }
+}
+

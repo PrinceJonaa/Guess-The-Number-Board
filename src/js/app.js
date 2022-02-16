@@ -26,7 +26,7 @@ const m11 = document.getElementById('m11')
 const m12 = document.getElementById('m2')
 const guessList1 = document.getElementById('guessList1')
 const guessList2 = document.getElementById('guessList2')
-const StartGame = document.getElementById('startGameBtn')
+const startGameBtn = document.getElementById('startGameBtn')
 const guessEntryArea = document.getElementById('guessEntryForm')
 const resetBtn = document.getElementById('resetBtn')
 const guessNumber = document.getElementById('guessNumber')
@@ -34,15 +34,15 @@ const player1score = document.getElementById('player1score')
 const player2score = document.getElementById('player2score')
 const guessSubmit = document.getElementById('guessSubmit')
 const guessInput = document.getElementById('guessInput')
-let player1guess = 0;
-let player2guess = 0;
+let player1guess = [];
+let player2guess = [];
 let player1win = false;
 let player2win = false;
 let playerTurn = 1
 
 //=========================
 
-
+startGameBtn.addEventListener("click", play);
 
 //=========================
 function clickButton() {
@@ -54,10 +54,10 @@ function boardLocation() {
 }
 
 
-function startGame() {
-  startGameBtn.addEventListener('click',
-  )
+function guessSubmitMe() {
+guessSubmit.addEventListener("click", submitThis);
 }
+
 
 // let guessTheNumber() {
 //   guessEntryArea.addEventListener('submit', function(event) {
@@ -91,29 +91,49 @@ let secretNum = Math.floor(Math.random() * 100) + 1;
 
 
 function displayTurn() {
-  if (playerTurn % 2 == 0) {
-    player1win = true;
-  } else {
-    player2win = true;
+  if (playerTurn == 1) {
+    player1Name.innerHTML = "Player 1's Turn";
+  } else if (playerTurn == 0) {
+    player2Name.innerHTML = "Player 2's Turn";
   }
 }
 
 function incPlayerTurn() {
-  playerTurn++;
+  if (playerTurn == 1) {
+    playerTurn = 0;
+    play();
+  } else if (playerTurn == 0) {
+    playerTurn = 1;
+    play();
+  }
+}
+
+
+
+// for (var i = 1; i <= 8; i++) {
+//   play();
+//   }
+
+function submitThis() {
+  let guess = parseInt(guessInput.value);
+}
+
+function guessPush() {
+if (playerTurn == 1) {
+  guessList1.push(player1guess)
+} else if (playerTurn == 0) {
+  guessList2.push(player2guess)
+  }
 }
 
 function play() {
   displayTurn();
-
+  submitThis();
+  guessPush();
+  playerWin();
+  playerScore();
   incPlayerTurn();
-}
-
-for (var i = 1; i <= 8; i++) {
-  play();
-  }
-
-function submitThis() {
-  let guess = parseInt(guessInput.value);
+  
 }
 
 // let guessListIdx1 = [1];
