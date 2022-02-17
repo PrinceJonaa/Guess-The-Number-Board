@@ -78,7 +78,6 @@ function render() {
   locationArray.forEach((square, idx) => {
     if (player1BoardLocation === idx) {
     locationArray[idx].appendChild(img1);
-    }
   })
 }
 
