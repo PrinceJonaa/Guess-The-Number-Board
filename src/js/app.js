@@ -36,6 +36,9 @@ const guessSubmit = document.getElementById('guessSubmit')
 const guessInput = document.getElementById('guessInput')
 const gUL1 = document.getElementById('gUL1')
 const gUL2 = document.getElementById('gUL2')
+const img1 = document.createElement('img');
+img1.src = 'src/images/piece1.png';
+img1.className = 'piece';
 let player1guess, player2guess; 
 let player1win = false;
 let player2win = false;
@@ -67,6 +70,7 @@ let playerScore = function() {
   
   if (player1win == true) {
     Score1 += 1
+    img1.appendChild
     player1Score.innerText = Score1;
     console.log(Score1)
     player1win = false
@@ -77,6 +81,11 @@ let playerScore = function() {
   }
 }
 
+function moveSquare(){
+  while (Score1 += 1)
+  
+
+}
 let playerWin = function() {
   if (player1guess == secretNum) {
     player1win = true;
@@ -86,59 +95,6 @@ let playerWin = function() {
     player2win = true;
     guessTurns();
     playerScore();
-}
-
-function moveSquare() {
-  if (Score1 == 0) {
-    const img = document.createElement('img');
-    img.src = 'src/images/piece1.png';
-    img.className = 'piece';
-    startArea.appendChild(img);
-  } else if (Score1 == 1) {
-    startArea.removeChild(img);
-    const img = document.createElement('img');
-    img.src = 'src/images/piece1.png';
-    img.className = 'piece';
-    m1.appendChild(img);
-  } else if (Score1 == 2) {
-    img.remove();
-    const img = document.createElement('img');
-    img.src = 'src/images/piece1.png';
-    img.className = 'piece';
-    m2.appendChild(img);
-  } else if (Score1 == 3) {
-    img.remove();
-    const img = document.createElement('img');
-    img.src = 'src/images/piece1.png';
-    img.className = 'piece';
-    m3.appendChild(img);
-  } else if (Score1 == 4) {
-    img.remove();
-    const img = document.createElement('img');
-    img.src = 'src/images/piece1.png';
-    img.className = 'piece';
-    m4.appendChild(img);
-  } else if (Score1 == 5) {
-    img.remove();
-    const img = document.createElement('img');
-    img.src = 'src/images/piece1.png';
-    img.className = 'piece';
-    m5.appendChild(img);
-  } else if (Score1 == 6) {
-    img.remove();
-    const img = document.createElement('img');
-    img.src = 'src/images/piece1.png';
-    img.className = 'piece';
-    m6.appendChild(img);
-  } else if (Score1 == 7) {
-    img.remove();
-    const img = document.createElement('img');
-    img.src = 'src/images/piece1.png';
-    img.className = 'piece';
-    m7.appendChild(img);
-  }
-
-
 }
 
 
@@ -214,6 +170,7 @@ function GuessCheck() {
 }
 
 function play() {
+  startArea.appendChild(img1);
   displayTurn();
   secretNum = Math.floor(Math.random() * 20) + 1;
   console.log('SN', secretNum)
