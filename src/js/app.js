@@ -30,15 +30,19 @@ const startGameBtn = document.getElementById('startGameBtn')
 const guessEntryArea = document.getElementById('guessEntryForm')
 const resetBtn = document.getElementById('resetBtn')
 const guessNumber = document.getElementById('guessNumber')
-const player1score = document.getElementById('player1score')
-const player2score = document.getElementById('player2score')
+const player1Score = document.getElementById('player1score')
+const player2Score = document.getElementById('player2score')
 const guessSubmit = document.getElementById('guessSubmit')
 const guessInput = document.getElementById('guessInput')
-let player1guess = [];
-let player2guess = [];
+const gUL1 = document.getElementById('gUL1')
+const gUL2 = document.getElementById('gUL2')
+let player1guess, player2guess; 
 let player1win = false;
 let player2win = false;
 let playerTurn = 1
+let secretNum
+let guessTurn1 = 0
+let guessTurn2 = 0
 
 //=========================
 
@@ -54,66 +58,97 @@ function boardLocation() {
 }
 
 
-function guessSubmitMe() {
 guessSubmit.addEventListener("click", submitThis);
-}
 
 let playerScore = function() {
+  let Score1 = 0
+  let Score2 = 0
   if (player1win == true) {
-    player1score.innerHtml += 1;
+    Score1 += 1
+    player1Score.innerText = Score1;
+    player1win = false
   } else if (player2win == true) {
-    player2score.innerHtml += 1;
+    Score2 += 1
+    player2Score.innerText = Score2;
+    player2win = false
   }
 }
 
 let playerWin = function() {
   if (player1guess == secretNum) {
     player1win = true;
+    playerScore();
+    console.log(player1win)
   } else if (player2guess == secretNum)
     player2win = true;
+    playerScore();
 }
 
-let secretNum = Math.floor(Math.random() * 100) + 1;
+
 
 
 function displayTurn() {
   if (playerTurn == 1) {
-    player1Name.innerHTML = "Player 1's Turn";
+    player1Name.innerHTML = "Player 1's Turn:";
   } else if (playerTurn == 0) {
-    player2Name.innerHTML = "Player 2's Turn";
+    player2Name.innerHTML = "Player 2's Turn:";
   }
 }
 
 function incPlayerTurn() {
   if (playerTurn == 1) {
     playerTurn = 0;
-    play();
+    guessTurn1 += 1
   } else if (playerTurn == 0) {
     playerTurn = 1;
-    play();
+    guessTurn2 += 1
   }
 }
 
-function submitThis() {
-  let guess = parseInt(guessInput.value);
-}
-
-function guessPush() {
-if (playerTurn == 1) {
-  guessList1.push(player1guess)
-} else if (playerTurn == 0) {
-  guessList2.push(player2guess)
+function guessTurns() {
+  if (guessTurn1 == 5 || player2win == true) {
+  secretNum = Math.floor(Math.random() * 20) + 1;
+  console.log("SN1", secretNum);
+  } else if (guessTurn2 == 5 || player1win == true) {
+  secretNum = Math.floor(Math.random() * 20) + 1;
+  console.log("SN2", secretNum);
   }
 }
+
+function submitThis(elm) {
+  if (playerTurn == 1) {
+  displayTurn();
+  player1guess = guessInput.value
+  const newGuess1 = document.createElement('li'); 
+  newGuess1.innerHTML = player1guess;
+  gUL1.appendChild(newGuess1);
+  playerWin();
+  guessInput.value = "";
+  
+  player1Name.innerHTML = "Player 1";
+  player2Name.innerHTML = "Player 2's Turn";
+
+  incPlayerTurn();
+  } else if (playerTurn == 0) {
+    displayTurn();
+    player2guess = guessInput.value;
+    const newGuess2 = document.createElement("li");
+    newGuess2.innerHTML = player2guess;
+    gUL2.appendChild(newGuess2);
+    playerWin();
+    guessInput.value = "";
+    player2Name.innerHTML = "Player 2";
+    player1Name.innerHTML = "Player 1's Turn";
+    incPlayerTurn();
+  }
+}
+
 
 function play() {
   displayTurn();
-  submitThis();
-  guessPush();
-  playerWin();
-  playerScore();
-  incPlayerTurn();
-  
+  secretNum = Math.floor(Math.random() * 20) + 1;
+  console.log('SN', secretNum)
+  startGameBtn.style.display = 'none' 
 }
 
 // let guessListIdx1 = [1];
