@@ -44,6 +44,9 @@ let secretNum
 let guessTurn1 = 0
 let guessTurn2 = 0
 
+let Score1 = 0
+let Score2 = 0
+
 //=========================
 
 startGameBtn.addEventListener("click", play);
@@ -61,11 +64,11 @@ function boardLocation() {
 guessSubmit.addEventListener("click", submitThis);
 
 let playerScore = function() {
-  let Score1 = 0
-  let Score2 = 0
+  
   if (player1win == true) {
     Score1 += 1
     player1Score.innerText = Score1;
+    console.log(Score1)
     player1win = false
   } else if (player2win == true) {
     Score2 += 1
@@ -77,14 +80,66 @@ let playerScore = function() {
 let playerWin = function() {
   if (player1guess == secretNum) {
     player1win = true;
+    guessTurns();
     playerScore();
-    console.log(player1win)
   } else if (player2guess == secretNum)
     player2win = true;
+    guessTurns();
     playerScore();
 }
 
+function moveSquare() {
+  if (Score1 == 0) {
+    const img = document.createElement('img');
+    img.src = 'src/images/piece1.png';
+    img.className = 'piece';
+    startArea.appendChild(img);
+  } else if (Score1 == 1) {
+    startArea.removeChild(img);
+    const img = document.createElement('img');
+    img.src = 'src/images/piece1.png';
+    img.className = 'piece';
+    m1.appendChild(img);
+  } else if (Score1 == 2) {
+    img.remove();
+    const img = document.createElement('img');
+    img.src = 'src/images/piece1.png';
+    img.className = 'piece';
+    m2.appendChild(img);
+  } else if (Score1 == 3) {
+    img.remove();
+    const img = document.createElement('img');
+    img.src = 'src/images/piece1.png';
+    img.className = 'piece';
+    m3.appendChild(img);
+  } else if (Score1 == 4) {
+    img.remove();
+    const img = document.createElement('img');
+    img.src = 'src/images/piece1.png';
+    img.className = 'piece';
+    m4.appendChild(img);
+  } else if (Score1 == 5) {
+    img.remove();
+    const img = document.createElement('img');
+    img.src = 'src/images/piece1.png';
+    img.className = 'piece';
+    m5.appendChild(img);
+  } else if (Score1 == 6) {
+    img.remove();
+    const img = document.createElement('img');
+    img.src = 'src/images/piece1.png';
+    img.className = 'piece';
+    m6.appendChild(img);
+  } else if (Score1 == 7) {
+    img.remove();
+    const img = document.createElement('img');
+    img.src = 'src/images/piece1.png';
+    img.className = 'piece';
+    m7.appendChild(img);
+  }
 
+
+}
 
 
 function displayTurn() {
@@ -118,10 +173,12 @@ function guessTurns() {
 function submitThis(elm) {
   if (playerTurn == 1) {
   displayTurn();
+  moveSquare();
   player1guess = guessInput.value
   const newGuess1 = document.createElement('li'); 
   newGuess1.innerHTML = player1guess;
   gUL1.appendChild(newGuess1);
+  GuessCheck();
   playerWin();
   guessInput.value = "";
   
@@ -135,6 +192,7 @@ function submitThis(elm) {
     const newGuess2 = document.createElement("li");
     newGuess2.innerHTML = player2guess;
     gUL2.appendChild(newGuess2);
+    GuessCheck();
     playerWin();
     guessInput.value = "";
     player2Name.innerHTML = "Player 2";
@@ -143,6 +201,17 @@ function submitThis(elm) {
   }
 }
 
+function GuessCheck() {
+  if (player1guess !== secretNum) {
+    infoArea.textContent = "Player's 1 Guess is Wrong!";
+} else if (player2guess !== secretNum) {
+  infoArea.textContent = "Player's 2 Guess is Wrong!";
+} else if (player1guess == secretNum) {
+  infoArea.textContent = "Player's 1 Guess is Correct!";
+} else if (player2guess == secretNum) {
+  infoArea.textContent = "Player's 2 Guess is Correct!";
+}
+}
 
 function play() {
   displayTurn();
@@ -150,6 +219,8 @@ function play() {
   console.log('SN', secretNum)
   startGameBtn.style.display = 'none' 
 }
+
+
 
 // let guessListIdx1 = [1];
 // let guessListIdx2 = [2];

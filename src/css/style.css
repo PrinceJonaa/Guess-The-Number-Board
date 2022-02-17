@@ -265,8 +265,19 @@
 
 #guessEntry {
   grid-area: guessEntry;
-  text-align: center;
 }
+
+#guessInput {
+  width: calc(100% - 20px);
+  padding: 5px;
+}
+
+#guessInput, #guessSubmit {
+  border-radius: 0px;
+  float:left;
+
+}
+
 html,
 body,
 .container {
@@ -285,10 +296,6 @@ div.col {
   flex-direction: row;
 }
 
-#submitGuess {
-  text-align: center;
-  margin: 15px auto;
-}
 
 /* Smartphones (portrait and landscape) ----------- */
 @media only screen and (min-device-width : 320px) and (max-device-width : 480px) {}
@@ -351,3 +358,9 @@ only screen and (min-resolution: 192dpi) {}
   }
 }
 
+.piece {
+  margin-top: 20px;
+  margin-left: 10px;
+  max-width: 50%;
+  max-height: 50%;
+}
