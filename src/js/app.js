@@ -50,8 +50,8 @@ let guessTurn2 = 0
 let Score1 = 0
 let Score2 = 0
 let locationArray = [startArea, m1, m2, m3, jailSpot, m4, m5, m6, eventSpot,m7, m8, m9, questionSpot, m10, m11, m12]
-let player1BoardLocation = []
-let player2BoardLocation = []
+let player1BoardLocation = 0
+let player2BoardLocation = 0
 
 //=========================
 
@@ -69,11 +69,24 @@ function boardLocation() {
 
 guessSubmit.addEventListener("click", submitThis);
 
+// Render Function
+
+// Location array for each. Index player location mat
+
+function render() {
+  console.log('it works!')
+  locationArray.forEach((square, idx) => {
+    if (player1BoardLocation === idx) {
+    locationArray[idx].appendChild(img1);
+    }
+  })
+}
+
 let playerScore = function() {
-  
   if (player1win == true) {
     Score1 += 1
-    img1.appendChild(img1);
+    player1BoardLocation += 1
+    m1.appendChild(img1);
     player1Score.innerText = Score1;
     console.log(Score1)
     player1win = false
@@ -84,11 +97,6 @@ let playerScore = function() {
   }
 }
 
-function moveSquare(){
-  while (Score1 += 1)
-  
-
-}
 let playerWin = function() {
   if (player1guess == secretNum) {
     player1win = true;
@@ -132,7 +140,6 @@ function guessTurns() {
 function submitThis(elm) {
   if (playerTurn == 1) {
   displayTurn();
-  moveSquare();
   player1guess = guessInput.value
   const newGuess1 = document.createElement('li'); 
   newGuess1.innerHTML = player1guess;
@@ -158,6 +165,7 @@ function submitThis(elm) {
     player1Name.innerHTML = "Player 1's Turn";
     incPlayerTurn();
   }
+  render();
 }
 
 function GuessCheck() {

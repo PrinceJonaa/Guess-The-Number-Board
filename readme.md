@@ -54,7 +54,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-This is my unit one project for the semester. I am using the using all of my previous knowledge of my class to create a game that will allow two  users to guess a number between 1 & 20. The first one to move around the board wins
+This is my unit one project for the semester. I am using all of my previous knowledge of my class to create a game that will allow two  users to guess a number between 1 & 20. The first one to move around the board wins
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
