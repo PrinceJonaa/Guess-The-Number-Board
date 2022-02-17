@@ -23,7 +23,7 @@ const m9 = document.getElementById('m9')
 const questionSpot = document.getElementById('question')
 const m10 = document.getElementById('m10')
 const m11 = document.getElementById('m11')
-const m12 = document.getElementById('m2')
+const m12 = document.getElementById('m12')
 const guessList1 = document.getElementById('guessList1')
 const guessList2 = document.getElementById('guessList2')
 const startGameBtn = document.getElementById('startGameBtn')
@@ -49,6 +49,9 @@ let guessTurn2 = 0
 
 let Score1 = 0
 let Score2 = 0
+let locationArray = [startArea, m1, m2, m3, jailSpot, m4, m5, m6, eventSpot,m7, m8, m9, questionSpot, m10, m11, m12]
+let player1BoardLocation = []
+let player2BoardLocation = []
 
 //=========================
 
@@ -70,7 +73,7 @@ let playerScore = function() {
   
   if (player1win == true) {
     Score1 += 1
-    img1.appendChild
+    img1.appendChild(img1);
     player1Score.innerText = Score1;
     console.log(Score1)
     player1win = false
