@@ -85,6 +85,8 @@ None! Just run the demo or clone the repository  and start playing!
 * [x] MVP
 * Adding more events!
 * Adding more questions!
+* Adding animations!
+* Adding guess range!
 
 See the [open issues](https://github.com/PrinceJonaa/Guess-The-Number-Board/issues) for a full list of proposed features (and known issues).
 

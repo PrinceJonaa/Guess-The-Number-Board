@@ -17,6 +17,9 @@
 </head>
 
 <body>
+  <div class="container-fluid" id="winScreen" hidden>
+    <h1> test </h1>
+  </div>
   <div class="container">
     <div id="board" class="board">
       <div id="event-area" class="event-area">
@@ -30,7 +33,10 @@
         <div id="event-card">
           <div id="card"></div>
         </div>
-        <div id="info-area"></div>
+        <div id="info-area">
+          <input id="questionInput" type="text" placeholder="Enter Answer" hidden/>
+          <button id="questionButton" class="btn btn-success" hidden>Submit</button>
+        </div>
       </div>
       <div id="move-area-1">
         <div id="m1"></div>
@@ -79,5 +85,6 @@
     </div>
   </div>
   </div>
+  <script src="src/js/confetti.js"></script>
 </body>
 </html>

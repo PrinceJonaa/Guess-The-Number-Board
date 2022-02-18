@@ -37,9 +37,15 @@ const guessInput = document.getElementById('guessInput')
 const gUL1 = document.getElementById('gUL1')
 const gUL2 = document.getElementById('gUL2')
 const img1 = document.createElement('img');
-img1.src = 'src/images/piece1.png';
+const questionInput = document.getElementById('questionInput');
+const questionButton = document.getElementById('questionButton');
+const winScreen = document.getElementById('winScreen')
+img1.src = '/src/images/piece1.png';
 img1.className = 'piece';
 let player1guess, player2guess; 
+const img2 = document.createElement('img');
+img2.src = '/src/images/piece2.png';
+img2.className = 'piece2';
 let player1win = false;
 let player2win = false;
 let playerTurn = 1
@@ -47,7 +53,7 @@ let secretNum
 let guessTurn1 = 0
 let guessTurn2 = 0
 
-let Score1 = 0
+let Score1 = 0;
 let Score2 = 0
 let locationArray = [startArea, m1, m2, m3, jailSpot, m4, m5, m6, eventSpot,m7, m8, m9, questionSpot, m10, m11, m12]
 let player1BoardLocation = 0
@@ -57,7 +63,6 @@ let player2BoardLocation = 0
 
 startGameBtn.addEventListener("click", play);
 
-//=========================
 function clickButton() {
   startbtn.addEventListener("click", boardLocation);
 }
@@ -66,18 +71,21 @@ function boardLocation() {
   window.location.href = "/board.html";
 }
 
-
 guessSubmit.addEventListener("click", submitThis);
 
-// Render Function
+//=========================
 
-// Location array for each. Index player location mat
 
 function render() {
-  console.log('it works!')
   locationArray.forEach((square, idx) => {
     if (player1BoardLocation === idx) {
     locationArray[idx].appendChild(img1);
+  }}
+  )
+  locationArray.forEach((square, idx) => {
+    if (player2BoardLocation === idx) {
+    locationArray[idx].appendChild(img2);
+  }   
   })
 }
 
@@ -85,12 +93,19 @@ let playerScore = function() {
   if (player1win == true) {
     Score1 += 1
     player1BoardLocation += 1
-    m1.appendChild(img1);
+    jailArea();
+    questionArea();
+    infoArea.textContent= "Player 1 Wins and move one spot on the board!"
+    infoArea.className- "player1win"
+    render();
     player1Score.innerText = Score1;
-    console.log(Score1)
     player1win = false
   } else if (player2win == true) {
     Score2 += 1
+    player2BoardLocation += 1
+    infoArea.textContent= "Player 2 Wins and move one spot on the board!"
+    infoArea.className- "player2win"
+    render();
     player2Score.innerText = Score2;
     player2win = false
   }
@@ -111,8 +126,10 @@ let playerWin = function() {
 function displayTurn() {
   if (playerTurn == 1) {
     player1Name.innerHTML = "Player 1's Turn:";
+    player1Name.className= "player1name"
   } else if (playerTurn == 0) {
     player2Name.innerHTML = "Player 2's Turn:";
+    player1Name.className= "player2name"
   }
 }
 
@@ -127,11 +144,13 @@ function incPlayerTurn() {
 }
 
 function guessTurns() {
-  if (guessTurn1 == 5 || player2win == true) {
-  secretNum = Math.floor(Math.random() * 20) + 1;
+  if (guessTurn1 == 3 || player2win == true) {
+  secretNum = 0;
+  secretNum = Math.floor(Math.random() * 5) + 1;
   console.log("SN1", secretNum);
-  } else if (guessTurn2 == 5 || player1win == true) {
-  secretNum = Math.floor(Math.random() * 20) + 1;
+  } else if (guessTurn2 == 3 || player1win == true) {
+  secretNum = 0;
+  secretNum = Math.floor(Math.random() * 5) + 1;
   console.log("SN2", secretNum);
   }
 }
@@ -144,12 +163,11 @@ function submitThis(elm) {
   newGuess1.innerHTML = player1guess;
   gUL1.appendChild(newGuess1);
   GuessCheck();
+  checkWinner();
   playerWin();
   guessInput.value = "";
-  
   player1Name.innerHTML = "Player 1";
   player2Name.innerHTML = "Player 2's Turn";
-
   incPlayerTurn();
   } else if (playerTurn == 0) {
     displayTurn();
@@ -158,14 +176,17 @@ function submitThis(elm) {
     newGuess2.innerHTML = player2guess;
     gUL2.appendChild(newGuess2);
     GuessCheck();
+    checkWinner();
     playerWin();
     guessInput.value = "";
     player2Name.innerHTML = "Player 2";
     player1Name.innerHTML = "Player 1's Turn";
     incPlayerTurn();
+    jailArea();
   }
   render();
 }
+
 
 function GuessCheck() {
   if (player1guess !== secretNum) {
@@ -174,26 +195,188 @@ function GuessCheck() {
   infoArea.textContent = "Player's 2 Guess is Wrong!";
 } else if (player1guess == secretNum) {
   infoArea.textContent = "Player's 1 Guess is Correct!";
-} else if (player2guess == secretNum) {
+}else if (player2guess == secretNum) {
   infoArea.textContent = "Player's 2 Guess is Correct!";
 }
+}
+function guessError(){
+  if (guessInput.value > 5)
+  alert("Please enter a number between 1 and 5! Turn Skipped.");
+  guessInput.value ="";
+}
+
+function checkWinner() {
+  if (Score1 === 15) {
+  youWin(); 
+} else if (Score2 === 15) {
+  youWin();
+}
+}
+
+function youWin() {
+  let allElements = document.querySelectorAll("body *");
+  allElements.forEach(function (element) {
+    if (element.getElementsByClassName !== "container-fluid") {
+      element.style.display = "none";
+      winScreen.style.display = "block";
+      confetti.start();
+      const win = document.createElement('h1');
+      win.innerHTML = "You Win!";
+      win.className = "win"
+      winScreen.appendChild(win);
+    }
+  });
 }
 
 function play() {
   startArea.appendChild(img1);
+  startArea.appendChild(img2);
   displayTurn();
-  secretNum = Math.floor(Math.random() * 20) + 1;
+  secretNum = Math.floor(Math.random() * 5) + 1;
   console.log('SN', secretNum)
-  startGameBtn.style.display = 'none' 
+  startGameBtn.style.display = 'none'
+  resetBtn.style.display = 'none'
+}
+
+function confettiStart() {
+  setTimeout(function() {
+    confetti.start(true, 5000);
+  }, 3000);
+}
+
+function confettiStop() {
+  setTimeout(function() {
+    confetti.stop();
+  }, 3000);
 }
 
 
+const randomQuestions = [
+  { 
+  question: "What is JavaScript?",
+    answers: {
+    a: `JavaScript is a scripting language used to make the website interactive.`,
+    b: `JavaScript is an assembly language used to make the website interactive`,
+    c: `JavaScript is a compiled language used to make the website interactive`,
+    d: `None of the mentioned`,
+  },
+  correctAnswer: "a"
+},
+{ 
+  question: "What is the correct syntax for referring to an external script called 'xxx.js'?",
+    answers: {  
+    a: `<script src="xxx.js">`,
+    b: `<script href="xxx.js">`,
+    c: `<script name="xxx.js">`,
+    d: `<script file="xxx.js">`,
+  },
+  correctAnswer: "c"
+},
+{ 
+  question: "What is the correct syntax for adding a comment in JavaScript?",
+    answers: {
+    a: `<!--This is a comment-->`,
+    b: `//This is a comment`,
+    c: `<!--This is a comment-->`,
+    d: `//This is a comment`,
+  },
+  correctAnswer: "b"
+},
+{ 
+  question: "Which of the following is not a reserved word in JavaScript?",
+    answers: {
+    a: `interface`,
+    b: `throws`,
+    c: `program`,
+    d: `int`,
+  },
+  correctAnswer: "d"
+},
+{ 
+  question: "Which of the following is not a valid JavaScript variable name?",
+    answers: {
+    a: `2names`,
+    b: `first_and_last,`,
+    c: `variable_1`,
+    d: `variable`,
+  },
+  correctAnswer: "a"
+},
+]; 
 
-// let guessListIdx1 = [1];
-// let guessListIdx2 = [2];
-// const p1lastGuess = guessListIdx1[guessListIdx1.length - 1];
-// const p2lastGuess = guessListIdx2[guessListIdx2.length - 1];
-// guessList1.textContent = guessListIdx1;
-// guessList2.textContent = guessListIdx2;
-// secretNum = Math.floor(Math.random() * 100 + 1);
-// resetBtn.setAttribute("hidden", true);
+
+
+function questionEvent() {
+  const randomQuestion = randomQuestions[Math.floor(Math.random() * randomQuestions.length)];
+  const question = randomQuestion.question;
+  const answers = randomQuestion.answers;
+  const correctAnswer = randomQuestion.correctAnswer;
+  questionArea.innerHTML = question;
+  questionInput.style.display = "block";
+  questionInput.addEventListener("keyup", function(event) {
+      event.preventDefault();
+      if (guessTurn1 == 1) {
+      if (questionInput.value == correctAnswer) {
+        infoArea.textContent = "Correct!";
+        infoArea.className = "correct";
+        player1BoardLocation += 1;
+        
+        render();
+        questionInput.style.display = "none";
+        questionInput.value = "";
+        questionInput.style.display = "none";
+        questionArea.innerHTML = "";
+        infoArea.textContent = "";
+        infoArea.className = "";
+      } else {
+        infoArea.textContent = "Wrong!";
+        infoArea.className = "wrong";
+        player1BoardLocation -= 1;
+        render();
+        questionInput.style.display = "none";
+        questionInput.value = "";
+        questionInput.style.display = "none";
+        questionArea.innerHTML = "";
+        infoArea.textContent = "";
+        infoArea.className = "";
+      }
+    } else if (guessTurn2 == 1) {
+      if (questionInput.value == correctAnswer) {
+        infoArea.textContent = "Correct!";
+        infoArea.className = "correct";
+        player2BoardLocation += 1;
+        render();
+        questionInput.style.display = "none";
+        questionInput.value = "";
+        questionInput.style.display = "none";
+        questionArea.innerHTML = "";
+        infoArea.textContent = "";
+        infoArea.className = "";
+      } else {
+        infoArea.textContent = "Wrong!";
+        infoArea.className = "wrong";
+        player2BoardLocation -= 1;
+        render();
+        questionInput.style.display = "none";
+        questionInput.value = "";
+        questionInput.style.display = "none";
+        questionArea.innerHTML = "";
+        infoArea.textContent = "";
+        infoArea.className = "";
+      }
+    }
+  });
+}
+
+function jailArea() {
+  if (player1BoardLocation == 5 || player2BoardLocation == 5) {
+  questionEvent();
+  }
+}
+
+
+function questionArea() {
+  if (player1BoardLocation == 13 || player2BoardLocation == 13) {
+    questionEvent();
+  }
+}
