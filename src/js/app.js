@@ -53,7 +53,7 @@ let secretNum
 let guessTurn1 = 0
 let guessTurn2 = 0
 
-let Score1 = 0;
+let Score1 = 0
 let Score2 = 0
 let locationArray = [startArea, m1, m2, m3, jailSpot, m4, m5, m6, eventSpot,m7, m8, m9, questionSpot, m10, m11, m12]
 let player1BoardLocation = 0
@@ -142,9 +142,6 @@ function incPlayerTurn() {
     guessTurn2 += 1
   }
 }
-
-// Make a function that tells the player if they are far from the secret number or close to it
-
 
 function guessTurns() {
   if (guessTurn1 == 3 || player2win == true) {
