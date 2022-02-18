@@ -10,7 +10,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/PrinceJonaa/Guess-The-Number-Board">
-    <img src="src/images/logo.png" alt="Logo" width="300" height="100">
+    <img src="src/images/apple-touch-icon.png" alt="Logo" width="300" height="100">
   </a>
 
 <h3 align="center">Guess The Number Board!</h3>
