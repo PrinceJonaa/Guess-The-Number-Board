@@ -143,6 +143,9 @@ function incPlayerTurn() {
   }
 }
 
+// Make a function that tells the player if they are far from the secret number or close to it
+
+
 function guessTurns() {
   if (guessTurn1 == 3 || player2win == true) {
   secretNum = 0;
@@ -320,7 +323,6 @@ function questionEvent() {
         infoArea.textContent = "Correct!";
         infoArea.className = "correct";
         player1BoardLocation += 1;
-        
         render();
         questionInput.style.display = "none";
         questionInput.value = "";
@@ -380,3 +382,44 @@ function questionArea() {
     questionEvent();
   }
 }
+
+// if (jailArea.contains(img1)) {
+//     infoArea.textContent = randomQuestions[0].question
+//     questionInput.style.display = "block"
+//     questionInput.addEventListener("click", () => {
+//       if (questionInput.value == randomQuestions[0].correctAnswer) {
+//         infoArea.textContent = "Correct!"
+//         img1.remove();
+//         questionInput.style.display = "none"
+//         questionInput.value = ""
+//         img1.style.top = "0px"
+//         img1.style.left = "0px"
+//         img1.style.backgroundColor = "transparent"
+//         img1.style.border = "none"
+//         img1.style.boxShadow = "none"
+//         img1.style.transition = "none"
+//         img1.style.width = "100%"
+//         img1.style.height = "100%"
+//         img1.style.zIndex = "0"
+//         img1.style.position = "absolute"
+//         img1.style.transform = "translate(0px, 0px)"
+//         img1.style.transform = "rotate(0deg)"
+//         img1.style.transition = "all 0.5s ease"
+//         jailArea.appendChild(img1)
+//         questionInput.value = ""
+//         infoArea.className = "infoArea"
+//         infoArea.textContent = "Player 1's Turn"
+//       } else if (questionInput.value != randomQuestions[0].correctAnswer) {
+//         infoArea.textContent = "Wrong!"
+//         img1.remove();
+//         questionInput.style.display = "none"
+//         questionInput.value = ""
+//         img1.style.top = "0px"
+//         img1.style.left = "0px"
+//         img1.style.backgroundColor = "transparent"
+//         img1.style.border = "none"
+//         img1.style.boxShadow = "none"
+//         img1.style.transition = "none"
+//         img1.style.width = "100%"
+//         img1.style.height = "100%"
+//         img
