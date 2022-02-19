@@ -24,7 +24,7 @@
     "start-spot move-area-4 question";
   grid-area: board;
   border: solid black 1px;
-  background-color:#0a9396;
+  background-color: #0a9396;
 }
 
 #event-area {
@@ -64,14 +64,13 @@
 #player1name {
   grid-area: player1name;
   text-align: center;
-
   font-size: 2.5em;
 }
 
 #player2name {
   grid-area: player2name;
   text-align: center;
-    font-size: 2.5em;
+  font-size: 2.5em;
 }
 
 #player1score {
@@ -300,7 +299,8 @@
 #guessButton {
   border-radius: 0px;
   float: right;
-} 
+}
+
 html,
 body,
 .container {
