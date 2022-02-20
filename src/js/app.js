@@ -6,12 +6,12 @@ const title = document.getElementById("title");
 const board = document.getElementById("board");
 const eventArea = document.getElementById("event-area");
 const scoreArea = document.getElementById("score-area");
-const player1Name = document.getElementById("player1name");
-const player2Name = document.getElementById("player2name");
-const player1Score = document.getElementById("player1score");
-const player2Score = document.getElementById("player2score");
-const player1GuessList = document.getElementById("gUL1");
-const player2GuessList = document.getElementById("gUL2");
+const player1Name = document.getElementById("player1Name");
+const player2Name = document.getElementById("player2Name");
+let player1Score = document.getElementById("player1score");
+let player2Score = document.getElementById("player2score");
+let player1GuessList = document.getElementById("gUL1");
+let player2GuessList = document.getElementById("gUL2");
 const eventCard = document.getElementById("event-card");
 const card = document.getElementById("card");
 const infoArea = document.getElementById("info-area");
@@ -49,8 +49,8 @@ const questionButton = document.getElementById("questionButton");
 //=========================================
 // Pieces
 //=========================================
-const player1Piece = document.createElement("player1Piece");
-const player2Piece = document.createElement("player2Piece");
+let player1Piece = document.createElement("img");
+let player2Piece = document.createElement("img");
 
 player1Piece.src = "/src/images/piece1.png";
 player1Piece.className = "piece1";
@@ -69,11 +69,9 @@ const winScreen = document.getElementById("winScreen");
 // Variables
 //=========================================
 
-
 let player1GuessAmount = 0; // The amount of times player 1 has guessed
 let player1BoardLocation = 0;
 let player1Win = false;
-
 
 let player2GuessAmount = 0; // The amount of times player 2 has guessed
 let player2BoardLocation = 0;
@@ -89,9 +87,23 @@ const player1Turn = 1;
 const player2Turn = 0;
 
 const locationArray = [
-  startArea, m1, m2, m3, jailSpot, m4, m5, m6, eventSpot, m7, m8, m9, questionSpot, m10, m11, m12,
+  startArea,
+  m1,
+  m2,
+  m3,
+  jailSpot, // 4 
+  m4,
+  m5,
+  m6,
+  eventSpot, // 8
+  m7,
+  m8,
+  m9,
+  questionSpot, //12
+  m10,
+  m11,
+  m12,
 ];
-
 
 //=========================================
 // Event Listeners
@@ -105,60 +117,49 @@ guessSubmitBtn.addEventListener("click", guessSubmit);
 // Functions
 //=========================================
 
+// When someone hits the start button, check who turn it is and change the info area. Update the image to the start area.
+
 function startGame() {
-  render();
+  secretNum = Math.floor(Math.random() * 5) + 1;
+  console.log("SN " + secretNum);
+  startArea.appendChild(player1Piece);
+  console.log(player1Piece);
+  startArea.appendChild(player2Piece);
+  player1BoardLocation = 0;
+  player2BoardLocation = 0;
+  player1Win = false;
+  player2Win = false;
+  playerTurn = player1Turn;
+  infoArea.textContent = "Player 1 will start the game.";
+  player1Name.innerHTML = "Player 1's Turn";
+  player1Name.style.color = "red";
   startGameBtn.style.display = "none";
 }
 
 function guessSubmit() {
+  validateGuess();
   if (playerTurn === player1Turn) {
-    player1Guess = guessTextBox.value;
-    let player1GuessBullet = document.createElement("li");
-    player1GuessBullet.innerHTML = player1Guess;
-    if (player2Guess === secretNum) {
-      player2GuessBullet.style = "color: green";
-    }
-    player1GuessList.appendChild(player1GuessBullet);
+    player1Guess = parseInt(guessTextBox.value);
     guessTextBox.value = "";
-    changePlayerTurn();
     render();
-  }
-  if (playerTurn === player2Turn) {
-    player2Guess = guessTextBox.value;
-    let player2GuessBullet = document.createElement("li");
-    player2GuessBullet.innerHTML = player2Guess;
-    if (player2Guess === secretNum) {
-      player2GuessBullet.style = "color: green";
-    }
-    player2GuessList.appendChild(player2GuessBullet);
+  } else if (playerTurn === player2Turn) {
+    player2Guess = parseInt(guessTextBox.value);
     guessTextBox.value = "";
-    changePlayerTurn();
     render();
   }
 }
 
 function render() {
-  if (player1GuessAmount === 0 && player2GuessAmount === 0) {
-    secretNum = Math.floor(Math.random() * 5) + 1;
-    startArea.appendChild(player1Piece);
-    startArea.appendChild(player2Piece);
-    player1BoardLocation = 0;
-    player2BoardLocation = 0;
-    player1Win = false;
-    player2Win = false;
-    playerTurn = player1Turn;
-    displayTurn();
-  }
-  displayTurn();
-  events();
-  newSecretNum();
-  updatePlayerLocation();
-  updateInfoArea();
-  guessError();
+  checkForEventLocation();
+  checkPlayerGuess();
+  updatePlayerPieceLocation();
   checkWin();
+  changePlayerTurn();
+  console.log("P1BL " + player1BoardLocation + " P2BL " + player2BoardLocation);
 }
 
-function updatePlayerLocation() {
+function updatePlayerPieceLocation() {
+
   locationArray.forEach((square, idx) => {
     if (player1BoardLocation === idx) {
       locationArray[idx].appendChild(player1Piece);
@@ -179,85 +180,83 @@ function checkWin() {
 }
 
 function changePlayerTurn() {
-  if (playerTurn == 1) {
-    playerTurn = 0;
-    guessTurn1 += 1;
-  } else if (playerTurn == 0) {
-    playerTurn = 1;
-    guessTurn2 += 1;
-  }
-}
-
-function displayTurn() {
   if (playerTurn === player1Turn) {
-    player1Name.textContent = "Player 1 Turn:";
-    player1Name.style = "color: red;";
-    player1Name.className = "player1name"
-    player2Name.textContent = "Player 2:";
-
-  }
-  if (playerTurn === player2Turn) {
-    player2Name.textContent = "Player 2 Turn:";
-    player2Name.style = "color: red;";
-    player2Name.className = "player2name"
-    player1Name.textContent = "Player 1:";
-
+    playerTurn = 0;
+  } else if (playerTurn === player2Turn) {
+    playerTurn = 1;
   }
 }
 
-function updateInfoArea() {
-  if (player1Guess !== secretNum) {
-    infoArea.textContent = "Player 1 have guessed the wrong number! Try again!";
-  }
-  if (player2Guess !== secretNum) {
-    infoArea.textContent = "Player 2 have guessed the wrong number! Try again!";
-  }
-  if (player1Guess === secretNum) {
-    infoArea.textContent = "Player 1 has guessed the right number and moves on to the next spot!";
-  }
-  if (player2Guess === secretNum) {
-    infoArea.textContent = "Player 2 has guessed the right number and moves on to the next spot!";
-  }
-}
+
 
 function newSecretNum() {
-  if (player1GuessAmount === 5) {
-    secretNum = 0;
+    player1GuessAmount = 0;
+    player2GuessAmount = 0;
     secretNum = Math.floor(Math.random() * 5) + 1;
-  }
-  if (player2GuessAmount === 5) {
-    secretNum = 0;
-    secretNum = Math.floor(Math.random() * 5) + 1;
-  }
-  if (player1Guess === secretNum) {
-    player1Score += 1;
+}
+function checkPlayerGuess() {
+  if (playerTurn === player1Turn) {
+    console.log("Player 1's Turn")
     player1GuessAmount += 1;
-    player1BoardLocation += 1;
-    secretNum = 0;
-    secretNum = Math.floor(Math.random() * 5) + 1;
-  }
-  if (player2Guess === secretNum) {
-    player2Score += 1;
+    let player1GuessBullet = document.createElement("li");
+    player1GuessBullet.innerHTML = player1Guess;
+    player1GuessList.appendChild(player1GuessBullet);
+    if (player1Guess === secretNum) {
+      player1Score += 1;
+      player1BoardLocation += 1;
+      player1Score.innerHTML = player1Score;
+      infoArea.textContent = "Player 1 has guessed the right number and moves on to the next spot!";
+      player1GuessBullet.style = "color: green";
+      newSecretNum();
+    } else {
+      infoArea.textContent = "Player 1 have guessed the wrong number!";
+    }
+
+  } else if (playerTurn === player2Turn) {
+    console.log("Player 2's Turn")
     player2GuessAmount += 1;
-    player2BoardLocation += 1;
-    secretNum = 0;
-    secretNum = Math.floor(Math.random() * 5) + 1;
+    player2Name.innerHTML = "Player 2's Turn";
+    player2Name.style = "Color: red";
+    player2Name.className = "player2name";
+    let player2GuessBullet = document.createElement("li");
+    player2GuessBullet.innerHTML = player2Guess;
+    player2GuessList.appendChild(player2GuessBullet);
+    if (player2Guess === secretNum) {
+      player2Score += 1;
+      player2BoardLocation += 1;
+      player2Score.innerHTML = player2Score;
+      infoArea.textContent = "Player 2 has guessed the right number and moves on to the next spot!";
+      player2GuessBullet.style = "color: green"
+      newSecretNum();
+    } else {
+      infoArea.textContent = "Player 2 have guessed the wrong number!"
+      player2Name.style = "color: black;";
+      player2Name.innerHTML = "Player 2:";
+      player1Name.innerHTML = "Player 1's Turn:";
+      player1Name.style = "color: red;";
+    }
   }
 }
 
-function events() {
-  if (player1BoardLocation === 5 || player2BoardLocation === 5) {
+
+
+function checkForEventLocation() {
+  if (player1BoardLocation === 4 || player2BoardLocation === 4) {
     questionEvent();
-  }
-  if (player1BoardLocation === 13 || player2BoardLocation === 13) {
+  } else if (player1BoardLocation === 12 || player2BoardLocation === 12) {
+    questionEvent();
+  } else if (player1BoardLocation === 8 || player2BoardLocation === 8) {
+    questionEvent();
+  } else if (player1BoardLocation === 1 || player2BoardLocation === 1) {
     questionEvent();
   }
 }
 
-function guessError() {
-  if (guessInput.value > 5)
+function validateGuess() {
+  if (guessTextBox.value > 5 || guessTextBox.value < 1 || !Number.isInteger(parseInt(guessTextBox.value))) {
     alert("Please enter a number between 1 and 5! Turn Skipped.");
-  guessInput.value = "";
+  }
+  console.log(guessTextBox.value);
 }
 
 // function play() {
@@ -265,7 +264,6 @@ function guessError() {
 //   startGameBtn.style.display = "none";
 //   resetBtn.style.display = "none";
 // }
-
 
 // function guessSubmit(elm) {
 //   if (playerTurn == 1) {
@@ -352,9 +350,6 @@ function guessError() {
 //   }
 // }
 
-
-
-
 // function guessCheck() {
 //   if (player1Guess !== secretNum) {
 //     infoArea.textContent = "Player's 1 Guess is Wrong!";
@@ -366,8 +361,6 @@ function guessError() {
 //     infoArea.textContent = "Player's 2 Guess is Correct!";
 //   }
 // }
-
-
 
 // function checkWinner() {
 //   if (Score1 === 15) {
@@ -392,7 +385,6 @@ function guessError() {
 //   });
 // }
 
-
 // function jailArea() {
 //   if (player1BoardLocation == 5 || player2BoardLocation == 5) {
 //     questionEvent();
@@ -406,24 +398,25 @@ function guessError() {
 // }
 
 function questionEvent() {
-  const randomQuestion = randomQuestions[Math.floor(Math.random() * randomQuestions.length)];
+  const randomQuestion =
+    randomQuestions[Math.floor(Math.random() * randomQuestions.length)];
   const question = randomQuestion.question;
   const answers = randomQuestion.answers;
   const correctAnswer = randomQuestion.correctAnswer;
-  questionArea.innerHTML = question;
-  questionInput.style.display = "block";
+  infoArea.textContent = question;
+  questionTextBox.style.display = "block";
   questionButton.style.display = "block";
-  questionInput.addEventListener("keyup", function (event) {
+  questionTextBox.addEventListener("keyup", function (event) {
     event.preventDefault();
     if (playerTurn === player1Turn) {
-      if (questionInput.value == correctAnswer) {
+      if (questionTextBox.value == correctAnswer) {
         infoArea.textContent = "Correct!";
         infoArea.className = "correct";
         player1BoardLocation += 1;
         render();
-        questionInput.style.display = "none";
-        questionInput.value = "";
-        questionInput.style.display = "none";
+        questionTextBox.style.display = "none";
+        questionTextBox.value = "";
+        questionTextBox.style.display = "none";
         questionArea.innerHTML = "";
         infoArea.textContent = "";
         infoArea.className = "";
@@ -432,23 +425,23 @@ function questionEvent() {
         infoArea.className = "wrong";
         player1BoardLocation -= 1;
         render();
-        questionInput.style.display = "none";
-        questionInput.value = "";
-        questionInput.style.display = "none";
+        questionTextBox.style.display = "none";
+        questionTextBox.value = "";
+        questionTextBox.style.display = "none";
         questionArea.innerHTML = "";
         infoArea.textContent = "";
         infoArea.className = "";
       }
     }
     if (playerTurn === player2Turn) {
-      if (questionInput.value == correctAnswer) {
+      if (questionTextBox.value == correctAnswer) {
         infoArea.textContent = "Correct!";
         infoArea.className = "correct";
         player2BoardLocation += 1;
         render();
-        questionInput.style.display = "none";
-        questionInput.value = "";
-        questionInput.style.display = "none";
+        questionTextBox.style.display = "none";
+        questionTextBox.value = "";
+        questionTextBox.style.display = "none";
         questionArea.innerHTML = "";
         infoArea.textContent = "";
         infoArea.className = "";
@@ -457,9 +450,9 @@ function questionEvent() {
         infoArea.className = "wrong";
         player2BoardLocation -= 1;
         render();
-        questionInput.style.display = "none";
-        questionInput.value = "";
-        questionInput.style.display = "none";
+        questionTextBox.style.display = "none";
+        questionTextBox.value = "";
+        questionTextBox.style.display = "none";
         questionArea.innerHTML = "";
         infoArea.textContent = "";
         infoArea.className = "";
@@ -467,7 +460,59 @@ function questionEvent() {
     }
   });
 }
-// //=======
+
+
+const randomQuestions = [{
+    question: "What is JavaScript?",
+    answers: {
+      a: `JavaScript is a scripting language used to make the website interactive.`,
+      b: `JavaScript is an assembly language used to make the website interactive`,
+      c: `JavaScript is a compiled language used to make the website interactive`,
+      d: `None of the mentioned`,
+    },
+    correctAnswer: "a",
+  },
+  {
+    question: "What is the correct syntax for referring to an external script called 'xxx.js'?",
+    answers: {
+      a: `<script src="xxx.js">`,
+      b: `<script href="xxx.js">`,
+      c: `<script name="xxx.js">`,
+      d: `<script file="xxx.js">`,
+    },
+    correctAnswer: "c",
+  },
+  {
+    question: "What is the correct syntax for adding a comment in JavaScript?",
+    answers: {
+      a: `<!--This is a comment-->`,
+      b: `//This is a comment`,
+      c: `<!--This is a comment-->`,
+      d: `//This is a comment`,
+    },
+    correctAnswer: "b",
+  },
+  {
+    question: "Which of the following is not a reserved word in JavaScript?",
+    answers: {
+      a: `interface`,
+      b: `throws`,
+      c: `program`,
+      d: `int`,
+    },
+    correctAnswer: "d",
+  },
+  {
+    question: "Which of the following is not a valid JavaScript variable name?",
+    answers: {
+      a: `2names`,
+      b: `first_and_last,`,
+      c: `variable_1`,
+      d: `variable`,
+    },
+    correctAnswer: "a",
+  },
+];
 
 // function confettiStart() {
 //   setTimeout(function () {
