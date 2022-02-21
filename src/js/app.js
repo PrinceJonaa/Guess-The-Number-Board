@@ -8,10 +8,11 @@ const eventArea = document.getElementById("event-area");
 const scoreArea = document.getElementById("score-area");
 const player1Name = document.getElementById("player1Name");
 const player2Name = document.getElementById("player2Name");
-let player1Score = document.getElementById("player1score");
-let player2Score = document.getElementById("player2score");
+let player1ScoreBoard = document.getElementById("player1score");
+let player2ScoreBoard = document.getElementById("player2score");
 let player1GuessList = document.getElementById("gUL1");
 let player2GuessList = document.getElementById("gUL2");
+let textInfo = document.getElementById("info-text");
 const eventCard = document.getElementById("event-card");
 const card = document.getElementById("card");
 const infoArea = document.getElementById("info-area");
@@ -44,7 +45,8 @@ const m12 = document.getElementById("m12");
 const startGameBtn = document.getElementById("startGameBtn");
 const guessSubmitBtn = document.getElementById("guessSubmit");
 const resetBtn = document.getElementById("resetBtn");
-const questionButton = document.getElementById("questionButton");
+const falseBtn = document.getElementById("false-button");
+const trueBtn = document.getElementById("true-button")
 
 //=========================================
 // Pieces
@@ -77,7 +79,9 @@ let player2GuessAmount = 0; // The amount of times player 2 has guessed
 let player2BoardLocation = 0;
 let player2Win = false;
 
-let player1Guess, player2Guess, secretNum, playerTurn;
+let player1Guess, player2Guess, secretNum, playerTurn, correctAnswer;
+
+let activeEvent = false;
 
 //=========================================
 // Constants
@@ -123,14 +127,13 @@ function startGame() {
   secretNum = Math.floor(Math.random() * 5) + 1;
   console.log("SN " + secretNum);
   startArea.appendChild(player1Piece);
-  console.log(player1Piece);
   startArea.appendChild(player2Piece);
   player1BoardLocation = 0;
   player2BoardLocation = 0;
   player1Win = false;
   player2Win = false;
   playerTurn = player1Turn;
-  infoArea.textContent = "Player 1 will start the game.";
+  textInfo.innerHTML = "Player 1 will start the game.";
   player1Name.innerHTML = "Player 1's Turn";
   player1Name.style.color = "red";
   startGameBtn.style.display = "none";
@@ -150,16 +153,19 @@ function guessSubmit() {
 }
 
 function render() {
-  checkForEventLocation();
   checkPlayerGuess();
   updatePlayerPieceLocation();
+  checkForEventLocation();
+  f1();
   checkWin();
+  newSecretNum();
   changePlayerTurn();
-  console.log("P1BL " + player1BoardLocation + " P2BL " + player2BoardLocation);
 }
 
-function updatePlayerPieceLocation() {
 
+
+
+function updatePlayerPieceLocation() {
   locationArray.forEach((square, idx) => {
     if (player1BoardLocation === idx) {
       locationArray[idx].appendChild(player1Piece);
@@ -181,19 +187,21 @@ function checkWin() {
 
 function changePlayerTurn() {
   if (playerTurn === player1Turn) {
-    playerTurn = 0;
+    playerTurn = player2Turn;
   } else if (playerTurn === player2Turn) {
-    playerTurn = 1;
+    playerTurn = player1Turn;
   }
 }
 
 
 
 function newSecretNum() {
-    player1GuessAmount = 0;
-    player2GuessAmount = 0;
-    secretNum = Math.floor(Math.random() * 5) + 1;
+  player1GuessAmount = 0;
+  player2GuessAmount = 0;
+  secretNum = Math.floor(Math.random() * 5) + 1;
+  console.log("SN2" + secretNum);
 }
+
 function checkPlayerGuess() {
   if (playerTurn === player1Turn) {
     console.log("Player 1's Turn")
@@ -201,39 +209,42 @@ function checkPlayerGuess() {
     let player1GuessBullet = document.createElement("li");
     player1GuessBullet.innerHTML = player1Guess;
     player1GuessList.appendChild(player1GuessBullet);
+    player1Name.innerHTML = "Player 1's Turn";
+    player1Name.style.color = "red";
+
     if (player1Guess === secretNum) {
-      player1Score += 1;
+      let player1HTMLScore = parseInt(player1ScoreBoard.textContent);
+      player1HTMLScore += 1;
+      player1HTMLScore.textContent = player1HTMLScore.toString();
+      player1ScoreBoard.textContent = player1HTMLScore;
       player1BoardLocation += 1;
-      player1Score.innerHTML = player1Score;
-      infoArea.textContent = "Player 1 has guessed the right number and moves on to the next spot!";
+      textInfo.innerHTML = `Player 1 has guessed the secret number ${secretNum} and moves on to the next spot!`;
       player1GuessBullet.style = "color: green";
-      newSecretNum();
+
     } else {
-      infoArea.textContent = "Player 1 have guessed the wrong number!";
+      textInfo.innerHTML = "Player 1 have guessed the wrong number!";
     }
 
   } else if (playerTurn === player2Turn) {
     console.log("Player 2's Turn")
     player2GuessAmount += 1;
     player2Name.innerHTML = "Player 2's Turn";
-    player2Name.style = "Color: red";
-    player2Name.className = "player2name";
     let player2GuessBullet = document.createElement("li");
     player2GuessBullet.innerHTML = player2Guess;
     player2GuessList.appendChild(player2GuessBullet);
+
     if (player2Guess === secretNum) {
-      player2Score += 1;
+      let player2HTMLScore = parseInt(player2ScoreBoard.textContent);
+      player2HTMLScore += 1;
+      player2HTMLScore.textContent = player2HTMLScore.toString();
+      player2ScoreBoard.textContent = player2HTMLScore;
       player2BoardLocation += 1;
-      player2Score.innerHTML = player2Score;
-      infoArea.textContent = "Player 2 has guessed the right number and moves on to the next spot!";
+      textInfo.innerHTML = `Player 2 has guessed the secret number ${secretNum} and moves on to the next spot!`;
       player2GuessBullet.style = "color: green"
-      newSecretNum();
     } else {
-      infoArea.textContent = "Player 2 have guessed the wrong number!"
-      player2Name.style = "color: black;";
-      player2Name.innerHTML = "Player 2:";
+      textInfo.innerHTML = "Player 2 have guessed the wrong number!"
       player1Name.innerHTML = "Player 1's Turn:";
-      player1Name.style = "color: red;";
+
     }
   }
 }
@@ -241,13 +252,13 @@ function checkPlayerGuess() {
 
 
 function checkForEventLocation() {
-  if (player1BoardLocation === 4 || player2BoardLocation === 4) {
+  if (player2BoardLocation === 1 || player2BoardLocation === 8 || player2BoardLocation === 12) {
+    trueBtn.style.display = "block";
+    falseBtn.style.display = "block";
     questionEvent();
-  } else if (player1BoardLocation === 12 || player2BoardLocation === 12) {
-    questionEvent();
-  } else if (player1BoardLocation === 8 || player2BoardLocation === 8) {
-    questionEvent();
-  } else if (player1BoardLocation === 1 || player2BoardLocation === 1) {
+  } else if (player1BoardLocation === 1 || player1BoardLocation === 8 || player1BoardLocation === 12) {
+    trueBtn.style.display = "block";
+    falseBtn.style.display = "block";
     questionEvent();
   }
 }
@@ -259,269 +270,129 @@ function validateGuess() {
   console.log(guessTextBox.value);
 }
 
-// function play() {
-//   console.log("SN", secretNum);
-//   startGameBtn.style.display = "none";
-//   resetBtn.style.display = "none";
-// }
-
-// function guessSubmit(elm) {
-//   if (playerTurn == 1) {
-//     displayTurn();
-//     player1Guess = guessInput.value;
-//     const newGuess1 = document.createElement("li");
-//     newGuess1.innerHTML = player1Guess;
-//     Player1GuessList.appendChild(newGuess1);
-//     guessCheck();
-//     checkWinner();
-//     playerWin();
-//     guessInput.value = "";
-//     player1Name.innerHTML = "Player 1";
-//     player2Name.innerHTML = "Player 2's Turn";
-//     incPlayerTurn();
-//   } else if (playerTurn == 0) {
-//     displayTurn();
-//     player2Guess = guessInput.value;
-//     const newGuess2 = document.createElement("li");
-//     newGuess2.innerHTML = player2Guess;
-//     Player2GuessList.appendChild(newGuess2);
-//     guessCheck();
-//     checkWinner();
-//     playerWin();
-//     guessInput.value = "";
-//     player2Name.innerHTML = "Player 2";
-//     player1Name.innerHTML = "Player 1's Turn";
-//     incPlayerTurn();
-//     jailArea();
-//   }
-//   render();
-// }
-
-// function render() {
-//   locationArray.forEach((square, idx) => {
-//     if (player1BoardLocation === idx) {
-//       locationArray[idx].appendChild(img1);
-//     }
-//     if (player2BoardLocation === idx) {
-//       locationArray[idx].appendChild(player2Piece);
-//     }
-//   });
-// }
-
-// function playerScore() {
-//   if (player1Win == true) {
-//     Score1 += 1;
-//     player1BoardLocation += 1;
-//     jailArea();
-//     questionArea();
-//     infoArea.textContent = "Player 1 Wins and move one spot on the board!";
-//     infoArea.className - "player1Win";
-//     render();
-//     player1Score.innerText = Score1;
-//     player1Win = false;
-//   } else if (player2Win == true) {
-//     Score2 += 1;
-//     player2BoardLocation += 1;
-//     infoArea.textContent = "Player 2 Wins and move one spot on the board!";
-//     infoArea.className - "player2Win";
-//     render();
-//     player2Score.innerText = Score2;
-//     player2Win = false;
-//   }
-// }
-
-// let playerWin = function () {
-//   if (player1Guess == secretNum) {
-//     player1Win = true;
-//     guessTurns();
-//     playerScore();
-//   } else if (player2Guess == secretNum) player2Win = true;
-//   guessTurns();
-//   playerScore();
-// };
-
-// function displayTurn() {
-//   if (playerTurn == 1) {
-//     player1Name.innerHTML = "Player 1's Turn:";
-//     player1Name.className = "player1name";
-//   } else if (playerTurn == 0) {
-//     player2Name.innerHTML = "Player 2's Turn:";
-//     player1Name.className = "player2name";
-//   }
-// }
-
-// function guessCheck() {
-//   if (player1Guess !== secretNum) {
-//     infoArea.textContent = "Player's 1 Guess is Wrong!";
-//   } else if (player2Guess !== secretNum) {
-//     infoArea.textContent = "Player's 2 Guess is Wrong!";
-//   } else if (player1Guess == secretNum) {
-//     infoArea.textContent = "Player's 1 Guess is Correct!";
-//   } else if (player2Guess == secretNum) {
-//     infoArea.textContent = "Player's 2 Guess is Correct!";
-//   }
-// }
-
-// function checkWinner() {
-//   if (Score1 === 15) {
-//     youWin();
-//   } else if (Score2 === 15) {
-//     youWin();
-//   }
-// }
-
-// function youWin() {
-//   let allElements = document.querySelectorAll("body *");
-//   allElements.forEach(function (element) {
-//     if (element.getElementsByClassName !== "container-fluid") {
-//       element.style.display = "none";
-//       winScreen.style.display = "block";
-//       confetti.start();
-//       const win = document.createElement("h1");
-//       win.innerHTML = "You Win!";
-//       win.className = "win";
-//       winScreen.appendChild(win);
-//     }
-//   });
-// }
-
-// function jailArea() {
-//   if (player1BoardLocation == 5 || player2BoardLocation == 5) {
-//     questionEvent();
-//   }
-// }
-
-// function questionArea() {
-//   if (player1BoardLocation == 13 || player2BoardLocation == 13) {
-//     questionEvent();
-//   }
-// }
-
 function questionEvent() {
   const randomQuestion =
     randomQuestions[Math.floor(Math.random() * randomQuestions.length)];
-  const question = randomQuestion.question;
-  const answers = randomQuestion.answers;
-  const correctAnswer = randomQuestion.correctAnswer;
-  infoArea.textContent = question;
-  questionTextBox.style.display = "block";
-  questionButton.style.display = "block";
-  questionTextBox.addEventListener("keyup", function (event) {
-    event.preventDefault();
+  textInfo.innerHTML = randomQuestion.question;
+  correctAnswer = randomQuestion.correctAnswer;
+  activeEvent = true;
+
+  trueBtn.addEventListener("click", function () {
+    console.log("True");
     if (playerTurn === player1Turn) {
-      if (questionTextBox.value == correctAnswer) {
-        infoArea.textContent = "Correct!";
-        infoArea.className = "correct";
+      console.log(playerTurn);
+      if (correctAnswer) {
+        console.log(correctAnswer);
         player1BoardLocation += 1;
-        render();
-        questionTextBox.style.display = "none";
-        questionTextBox.value = "";
-        questionTextBox.style.display = "none";
-        questionArea.innerHTML = "";
-        infoArea.textContent = "";
-        infoArea.className = "";
       } else {
-        infoArea.textContent = "Wrong!";
-        infoArea.className = "wrong";
+        console.log(correctAnswer);
         player1BoardLocation -= 1;
-        render();
-        questionTextBox.style.display = "none";
-        questionTextBox.value = "";
-        questionTextBox.style.display = "none";
-        questionArea.innerHTML = "";
-        infoArea.textContent = "";
-        infoArea.className = "";
       }
-    }
-    if (playerTurn === player2Turn) {
-      if (questionTextBox.value == correctAnswer) {
-        infoArea.textContent = "Correct!";
-        infoArea.className = "correct";
+    } else if (playerTurn === player2Turn) {
+      console.log(playerTurn);
+      if (correctAnswer) {
+        console.log(correctAnswer);
         player2BoardLocation += 1;
-        render();
-        questionTextBox.style.display = "none";
-        questionTextBox.value = "";
-        questionTextBox.style.display = "none";
-        questionArea.innerHTML = "";
-        infoArea.textContent = "";
-        infoArea.className = "";
       } else {
-        infoArea.textContent = "Wrong!";
-        infoArea.className = "wrong";
+        console.log(correctAnswer);
         player2BoardLocation -= 1;
-        render();
-        questionTextBox.style.display = "none";
-        questionTextBox.value = "";
-        questionTextBox.style.display = "none";
-        questionArea.innerHTML = "";
-        infoArea.textContent = "";
-        infoArea.className = "";
       }
     }
+    updatePlayerPieceLocation();
+    activeEvent = false;
   });
+
+  falseBtn.addEventListener("click", function () {
+    console.log("False");
+    if (playerTurn === player1Turn) {
+      console.log(playerTurn);
+      if (!correctAnswer) {
+        console.log(correctAnswer);
+        player1BoardLocation += 1;
+      } else {
+        console.log(correctAnswer);
+        player1BoardLocation -= 1;
+      }
+    } else if (playerTurn === player2Turn) {
+      console.log(playerTurn);
+      if (!correctAnswer) {
+        console.log(correctAnswer);
+        player2BoardLocation += 1;
+      } else {
+        console.log(correctAnswer);
+        player1BoardLocation -= 1;
+      }
+    }
+    updatePlayerPieceLocation();
+    activeEvent = false;
+  });
+  // while (activeEvent) {
+  //   // waiting
+
+  // }
+
 }
 
 
+
+
+
+
+//==========================
+// Events & Challenges
+// =========================
+
+
 const randomQuestions = [{
-    question: "What is JavaScript?",
-    answers: {
-      a: `JavaScript is a scripting language used to make the website interactive.`,
-      b: `JavaScript is an assembly language used to make the website interactive`,
-      c: `JavaScript is a compiled language used to make the website interactive`,
-      d: `None of the mentioned`,
-    },
-    correctAnswer: "a",
+    question: `JavaScript is a compiled language used to make the website interactive`,
+    correctAnswer: false
   },
   {
-    question: "What is the correct syntax for referring to an external script called 'xxx.js'?",
-    answers: {
-      a: `<script src="xxx.js">`,
-      b: `<script href="xxx.js">`,
-      c: `<script name="xxx.js">`,
-      d: `<script file="xxx.js">`,
-    },
-    correctAnswer: "c",
+    question: `<script file="xxx.js">`,
+    correctAnswer: false
   },
   {
-    question: "What is the correct syntax for adding a comment in JavaScript?",
-    answers: {
-      a: `<!--This is a comment-->`,
-      b: `//This is a comment`,
-      c: `<!--This is a comment-->`,
-      d: `//This is a comment`,
-    },
-    correctAnswer: "b",
+    question: "`//This is a comment`",
+    correctAnswer: true
   },
   {
-    question: "Which of the following is not a reserved word in JavaScript?",
-    answers: {
-      a: `interface`,
-      b: `throws`,
-      c: `program`,
-      d: `int`,
-    },
-    correctAnswer: "d",
-  },
-  {
-    question: "Which of the following is not a valid JavaScript variable name?",
-    answers: {
-      a: `2names`,
-      b: `first_and_last,`,
-      c: `variable_1`,
-      d: `variable`,
-    },
-    correctAnswer: "a",
-  },
+    question: "`/*This is a comment*/`",
+    correctAnswer: true
+  }
 ];
 
-// function confettiStart() {
-//   setTimeout(function () {
-//     confetti.start(true, 5000);
-//   }, 3000);
-// }
+//=========================
+// Confetti
+//=========================
 
-// function confettiStop() {
-//   setTimeout(function () {
-//     confetti.stop();
-//   }, 3000);
-// }
+function confettiStart() {
+  setTimeout(function () {
+    confetti.start(true, 5000);
+  }, 3000);
+}
+
+function confettiStop() {
+  setTimeout(function () {
+    confetti.stop();
+  }, 3000);
+}
+
+
+//=========================
+// Test Area
+//=========================
+
+function resolveAfter2Seconds(x) {
+  return new Promise(resolve => {
+    setTimeout(() => {
+      resolve(x);
+    }, 2000);
+  });
+}
+
+async function f1() {
+  console.log(Date.now());
+  var x = await resolveAfter2Seconds(10);
+  console.log('2 sec delay')
+  console.log(Date.now()); // 10
+}
