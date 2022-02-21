@@ -140,34 +140,51 @@ function startGame() {
 }
 
 function guessSubmit() {
-  validateGuess();
-  if (playerTurn === player1Turn) {
-    player1Guess = parseInt(guessTextBox.value);
-    guessTextBox.value = "";
-    render();
-  } else if (playerTurn === player2Turn) {
-    player2Guess = parseInt(guessTextBox.value);
-    guessTextBox.value = "";
-    render();
-  }
+  // validateGuess();
+  // if (playerTurn === player1Turn) {
+  //   player1Guess = parseInt(guessTextBox.value);
+  //   guessTextBox.value = "";
+  //   checkPlayerGuess();
+  // } else if (playerTurn === player2Turn) {
+  //   player2Guess = parseInt(guessTextBox.value);
+  //   guessTextBox.value = "";
+  //   checkPlayerGuess();
+  // }
+  Swal.fire({
+    title: "Enter a number between 1 and 5",
+    input: 'text',
+    inputLabel: 'Enter your name',
+    inputValue: player1Guess,
+    confirmButtonText: "Save",
+    denyButtonText: `Don't save`,
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      Swal.fire("Saved!", "", "success");
+      checkPlayerGuess();
+    } else if (result.isDenied) {
+      Swal.fire("Changes are not saved", "", "info");
+    }
+  });
 }
 
-function render() {
-  console.log('check player guess')
-  checkPlayerGuess();
-  console.log('update player piece location')
-  updatePlayerPieceLocation();
-  console.log('check for event location')
-  checkForEventLocation();
-  console.log('update player piece location')
-  updatePlayerPieceLocation();
-  console.log('check for win')
-  checkWin();
-  console.log('new secret num')
-  newSecretNum();
-  console.log('change player turn')
-  changePlayerTurn();
-}
+// function render() {
+//   console.log('check player guess')
+//   checkPlayerGuess();
+//   console.log('update player piece location')
+//   updatePlayerPieceLocation();
+//   console.log('check for event location')
+//   // checkForEventLocation();
+//   console.log('update player piece location')
+//   updatePlayerPieceLocation();
+//   console.log('check for win')
+//   checkWin();
+//   console.log('new secret num')
+//   newSecretNum();
+//   questionEvent();
+//   console.log('change player turn')
+//   changePlayerTurn();
+// }
 
 
 
@@ -180,6 +197,7 @@ function updatePlayerPieceLocation() {
     if (player2BoardLocation === idx) {
       locationArray[idx].appendChild(player2Piece);
     }
+    checkForEventLocation();
   });
 }
 
@@ -191,22 +209,25 @@ function checkWin() {
     setTimeout(function () {
       confettiStop();
     }, 5000);
-  }
-  if (player2BoardLocation === 15) {
+  } else if (player2BoardLocation === 15) {
     player2Win = true;
     player2Name.innerHtml = "Player 2 Wins!";
     confettiStart();
     setTimeout(function () {
       confettiStop();
     }, 5000);
+  } else {
+    newSecretNum();
   }
 }
 
 function changePlayerTurn() {
   if (playerTurn === player1Turn) {
     playerTurn = player2Turn;
+    console.log("Player 2's Turn");
   } else if (playerTurn === player2Turn) {
     playerTurn = player1Turn;
+    console.log("Player 1's Turn");
   }
 }
 
@@ -217,6 +238,7 @@ function newSecretNum() {
   player2GuessAmount = 0;
   secretNum = Math.floor(Math.random() * 5) + 1;
   console.log("SN2" + secretNum);
+  changePlayerTurn();
 }
 
 function checkPlayerGuess() {
@@ -226,7 +248,7 @@ function checkPlayerGuess() {
     let player1GuessBullet = document.createElement("li");
     player1GuessBullet.innerHTML = player1Guess;
     player1GuessList.appendChild(player1GuessBullet);
-    player1Name.innerHTML = "Player 1's Turn";
+    player1Name.innerHTML = "Player 1's Turn:";
     player1Name.style.color = "red";
     player2Name.innerHTML = "Player 2:";
     player2Name.style.color = "black";
@@ -241,7 +263,7 @@ function checkPlayerGuess() {
       player1GuessBullet.style = "color: green";
       player1Name.innerHTML = "Player 1:";
       player1Name.style.color = "black";
-      player2Name.innerHTML = "Player 2's Turn";
+      player2Name.innerHTML = "Player 2's Turn:";
       player2Name.style.color = "red";
 
     } else {
@@ -251,11 +273,11 @@ function checkPlayerGuess() {
   } else if (playerTurn === player2Turn) {
     player1Name.innerHTML = "Player 1:";
     player1Name.style.color = "black";
-    player2Name.innerHTML = "Player 2's Turn";
+    player2Name.innerHTML = "Player 2's Turn:";
     player2Name.style.color = "red";
     console.log("Player 2's Turn")
     player2GuessAmount += 1;
-    player2Name.innerHTML = "Player 2's Turn";
+    player2Name.innerHTML = "Player 2's Turn:";
     let player2GuessBullet = document.createElement("li");
     player2GuessBullet.innerHTML = player2Guess;
     player2GuessList.appendChild(player2GuessBullet);
@@ -270,7 +292,7 @@ function checkPlayerGuess() {
       player2GuessBullet.style = "color: green"
       player2Name.innerHTML = "Player 2:";
       player2Name.style.color = "black";
-      player1Name.innerHTML = "Player 1's Turn";
+      player1Name.innerHTML = "Player 1's Turn:";
       player1Name.style.color = "red";
     } else {
       textInfo.innerHTML = "Player 2 have guessed the wrong number!"
@@ -278,6 +300,7 @@ function checkPlayerGuess() {
 
     }
   }
+  updatePlayerPieceLocation();
 }
 
 
@@ -292,6 +315,7 @@ function checkForEventLocation() {
     falseBtn.style.display = "block";
     questionEvent();
   }
+  checkWin();
 }
 
 function validateGuess() {
@@ -360,6 +384,7 @@ function questionEvent() {
     updatePlayerPieceLocation();
   });
 };
+
 
 
 // trueBtn.addEventListener("click", function () {
