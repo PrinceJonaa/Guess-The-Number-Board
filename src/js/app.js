@@ -153,12 +153,19 @@ function guessSubmit() {
 }
 
 function render() {
+  console.log('check player guess')
   checkPlayerGuess();
+  console.log('update player piece location')
   updatePlayerPieceLocation();
+  console.log('check for event location')
   checkForEventLocation();
-  f1();
+  console.log('update player piece location')
+  updatePlayerPieceLocation();
+  console.log('check for win')
   checkWin();
+  console.log('new secret num')
   newSecretNum();
+  console.log('change player turn')
   changePlayerTurn();
 }
 
@@ -179,9 +186,19 @@ function updatePlayerPieceLocation() {
 function checkWin() {
   if (player1BoardLocation === 15) {
     player1Win = true;
+    player1Name.innerHTML = "Player 1 Wins!";
+    confettiStart();
+    setTimeout(function () {
+      confettiStop();
+    }, 5000);
   }
   if (player2BoardLocation === 15) {
     player2Win = true;
+    player2Name.innerHtml = "Player 2 Wins!";
+    confettiStart();
+    setTimeout(function () {
+      confettiStop();
+    }, 5000);
   }
 }
 
@@ -211,6 +228,8 @@ function checkPlayerGuess() {
     player1GuessList.appendChild(player1GuessBullet);
     player1Name.innerHTML = "Player 1's Turn";
     player1Name.style.color = "red";
+    player2Name.innerHTML = "Player 2:";
+    player2Name.style.color = "black";
 
     if (player1Guess === secretNum) {
       let player1HTMLScore = parseInt(player1ScoreBoard.textContent);
@@ -220,12 +239,20 @@ function checkPlayerGuess() {
       player1BoardLocation += 1;
       textInfo.innerHTML = `Player 1 has guessed the secret number ${secretNum} and moves on to the next spot!`;
       player1GuessBullet.style = "color: green";
+      player1Name.innerHTML = "Player 1:";
+      player1Name.style.color = "black";
+      player2Name.innerHTML = "Player 2's Turn";
+      player2Name.style.color = "red";
 
     } else {
       textInfo.innerHTML = "Player 1 have guessed the wrong number!";
     }
 
   } else if (playerTurn === player2Turn) {
+    player1Name.innerHTML = "Player 1:";
+    player1Name.style.color = "black";
+    player2Name.innerHTML = "Player 2's Turn";
+    player2Name.style.color = "red";
     console.log("Player 2's Turn")
     player2GuessAmount += 1;
     player2Name.innerHTML = "Player 2's Turn";
@@ -241,6 +268,10 @@ function checkPlayerGuess() {
       player2BoardLocation += 1;
       textInfo.innerHTML = `Player 2 has guessed the secret number ${secretNum} and moves on to the next spot!`;
       player2GuessBullet.style = "color: green"
+      player2Name.innerHTML = "Player 2:";
+      player2Name.style.color = "black";
+      player1Name.innerHTML = "Player 1's Turn";
+      player1Name.style.color = "red";
     } else {
       textInfo.innerHTML = "Player 2 have guessed the wrong number!"
       player1Name.innerHTML = "Player 1's Turn:";
@@ -273,65 +304,119 @@ function validateGuess() {
 function questionEvent() {
   const randomQuestion =
     randomQuestions[Math.floor(Math.random() * randomQuestions.length)];
-  textInfo.innerHTML = randomQuestion.question;
+  // textInfo.innerHTML = randomQuestion.question;
   correctAnswer = randomQuestion.correctAnswer;
   activeEvent = true;
 
-  trueBtn.addEventListener("click", function () {
-    console.log("True");
-    if (playerTurn === player1Turn) {
-      console.log(playerTurn);
-      if (correctAnswer) {
-        console.log(correctAnswer);
-        player1BoardLocation += 1;
-      } else {
-        console.log(correctAnswer);
-        player1BoardLocation -= 1;
+  Swal.fire({
+    title: `${randomQuestion.question}`,
+    showDenyButton: true,
+    confirmButtonText: "True",
+    denyButtonText: "False",
+  }).then((result) => {
+    /* Read more about isConfirmed, isDenied below */
+    if (result.isConfirmed) {
+      if (playerTurn === player1Turn) {
+        console.log(playerTurn);
+        if (correctAnswer) {
+          Swal.fire(`The correct answer is ${correctAnswer}.`, "", "success");
+          player1BoardLocation += 1;
+        } else {
+          Swal.fire(`The correct answer was ${correctAnswer}.`, "", "error");
+          player1BoardLocation -= 1;
+        }
+      } else if (playerTurn === player2Turn) {
+        console.log(playerTurn);
+        if (correctAnswer) {
+          Swal.fire(`The correct answer is ${correctAnswer}.`, "", "success");
+          player2BoardLocation += 1;
+        } else {
+          Swal.fire(`The correct answer was ${correctAnswer}.`, "", "error");
+          player2BoardLocation -= 1;
+        }
       }
-    } else if (playerTurn === player2Turn) {
-      console.log(playerTurn);
-      if (correctAnswer) {
-        console.log(correctAnswer);
-        player2BoardLocation += 1;
-      } else {
-        console.log(correctAnswer);
-        player2BoardLocation -= 1;
+      activeEvent = false;
+    } else if (result.isDenied) {
+      if (playerTurn === player1Turn) {
+        console.log(playerTurn);
+        if (!correctAnswer) {
+          Swal.fire(`The correct answer is ${correctAnswer}.`, "", "success");
+          player1BoardLocation += 1;
+        } else {
+          Swal.fire(`The correct answer was ${correctAnswer}.`, "", "error");
+          player1BoardLocation -= 1;
+        }
+      } else if (playerTurn === player2Turn) {
+        console.log(playerTurn);
+        if (!correctAnswer) {
+          Swal.fire(`The correct answer is ${correctAnswer}.`, "", "success");
+          player2BoardLocation += 1;
+        } else {
+          Swal.fire(`The correct answer was ${correctAnswer}.`, "", "error");
+          player1BoardLocation -= 1;
+        }
       }
     }
     updatePlayerPieceLocation();
-    activeEvent = false;
   });
+};
 
-  falseBtn.addEventListener("click", function () {
-    console.log("False");
-    if (playerTurn === player1Turn) {
-      console.log(playerTurn);
-      if (!correctAnswer) {
-        console.log(correctAnswer);
-        player1BoardLocation += 1;
-      } else {
-        console.log(correctAnswer);
-        player1BoardLocation -= 1;
-      }
-    } else if (playerTurn === player2Turn) {
-      console.log(playerTurn);
-      if (!correctAnswer) {
-        console.log(correctAnswer);
-        player2BoardLocation += 1;
-      } else {
-        console.log(correctAnswer);
-        player1BoardLocation -= 1;
-      }
-    }
-    updatePlayerPieceLocation();
-    activeEvent = false;
-  });
-  // while (activeEvent) {
-  //   // waiting
 
-  // }
+// trueBtn.addEventListener("click", function () {
+//   console.log("True");
+//   if (playerTurn === player1Turn) {
+//     console.log(playerTurn);
+//     if (correctAnswer) {
+//       console.log(correctAnswer);
+//       player1BoardLocation += 1;
+//     } else {
+//       console.log(correctAnswer);
+//       player1BoardLocation -= 1;
+//     }
+//   } else if (playerTurn === player2Turn) {
+//     console.log(playerTurn);
+//     if (correctAnswer) {
+//       console.log(correctAnswer);
+//       player2BoardLocation += 1;
+//     } else {
+//       console.log(correctAnswer);
+//       player2BoardLocation -= 1;
+//     }
+//   }
+//   updatePlayerPieceLocation();
+//   activeEvent = false;
+// });
 
-}
+//   falseBtn.addEventListener("click", function () {
+//     console.log("False");
+//     if (playerTurn === player1Turn) {
+//       console.log(playerTurn);
+//       if (!correctAnswer) {
+//         console.log(correctAnswer);
+//         player1BoardLocation += 1;
+//       } else {
+//         console.log(correctAnswer);
+//         player1BoardLocation -= 1;
+//       }
+//     } else if (playerTurn === player2Turn) {
+//       console.log(playerTurn);
+//       if (!correctAnswer) {
+//         console.log(correctAnswer);
+//         player2BoardLocation += 1;
+//       } else {
+//         console.log(correctAnswer);
+//         player1BoardLocation -= 1;
+//       }
+//     }
+//     updatePlayerPieceLocation();
+//     activeEvent = false;
+//   });
+//   // while (activeEvent) {
+//   //   // waiting
+
+//   // }
+
+// }
 
 
 
@@ -348,7 +433,7 @@ const randomQuestions = [{
     correctAnswer: false
   },
   {
-    question: `<script file="xxx.js">`,
+    question: `\<script file=\"xxx.js\"\>`,
     correctAnswer: false
   },
   {
@@ -381,18 +466,3 @@ function confettiStop() {
 //=========================
 // Test Area
 //=========================
-
-function resolveAfter2Seconds(x) {
-  return new Promise(resolve => {
-    setTimeout(() => {
-      resolve(x);
-    }, 2000);
-  });
-}
-
-async function f1() {
-  console.log(Date.now());
-  var x = await resolveAfter2Seconds(10);
-  console.log('2 sec delay')
-  console.log(Date.now()); // 10
-}
