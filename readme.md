@@ -21,7 +21,7 @@
     <a href="https://github.com/PrinceJonaa/Guess-The-Number-Board"><strong>Documentation »</strong></a>
     <br />
     <br />
-    <a href="http://Guess-the-number-board-demo.surge.sh">View Demo</a>
+    <a href="https://guess-the-number-board-demo-2.surge.sh">View Demo</a>
     ·
     <a href="https://github.com/PrinceJonaa/Guess-The-Number-Board/issues">Report Bug</a>
     ·

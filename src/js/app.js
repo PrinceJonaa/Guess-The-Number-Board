@@ -202,7 +202,7 @@ function updatePlayerPieceLocation() {
 }
 
 function checkWin() {
-  if (player1BoardLocation === 1) {
+  if (player1BoardLocation === 15) {
     player1Win = true;
     player1Name.innerHTML = "Player 1 Wins!";
     player2Name.innerHTML = ""
