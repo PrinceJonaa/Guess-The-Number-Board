@@ -67,10 +67,10 @@
       <div id="question"></div>
     </div>
     <div id="guesslist1">
-      <ul id="gUL1">
+      <ul id="gUL1" class="list-group">
       </ul>
     </div>
-    <div id="guesslist2">
+    <div id="guesslist2" class="list-group">
       <ul id="gUL2">
       </ul>
     </div>
@@ -81,7 +81,8 @@
           <div class="input-group-prepend">
             <input type="text" class="form-control" id="guessInput">
           </div>
-          <button class="btn btn-dark" type="button" id="guessSubmit">Submit</button>
+          <button class="btn btn-dark" type="button" id="guessSubmit" data-toggle="tooltip" data-placement="top"
+            title="Enter guess from 1 -5 ">Submit</button>
         </div>
       </div>
       <div id="resetgame"><button id="resetBtn" class="btn btn-dark">Reset</button></div>

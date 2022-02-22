@@ -23,8 +23,8 @@
     "move-area-1 event-area move-area-3"
     "start-spot move-area-4 question";
   grid-area: board;
-  border: solid black 1px;
-  background-color: #0a9396;
+  border: 3px solid white;
+  border-radius: 10px;
 }
 
 #event-area {
@@ -43,7 +43,10 @@
 #title {
   grid-area: title;
   text-align: center;
+  position: relative;
   font-size: 3.5em;
+  color: white;
+  margin-top: 30px;
 }
 
 #score-area {
@@ -57,7 +60,7 @@
     ". . ."
     "player2name player2name player2score";
   grid-area: score-area;
-  border: 1px solid black;
+  border: 1px solid white;
   border-radius: 10px;
 }
 
@@ -77,12 +80,14 @@
   grid-area: player1score;
   text-align: center;
   font-size: 2em;
+  color: red;
 }
 
 #player2score {
   grid-area: player2score;
   text-align: center;
   font-size: 2em;
+  color: red; 
 }
 
 #event-card {
@@ -105,7 +110,10 @@
 #info-area {
   grid-area: info-area;
   font-size: 1.5em;
-  color: #e9d8a6;
+  color: white;
+  border: white 1px solid;
+  border-radius: 10px;
+  margin-bottom: 10px;
 }
 
 #move-area-1 {
@@ -119,22 +127,29 @@
     "m2 m2 m2"
     "m1 m1 m1";
   grid-area: move-area-1;
+  
+  border-radius: 10px;
 }
 
 #m1 {
   grid-area: m1;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
+  border-top: 1px solid white;
+
+
 }
+
+
 
 #m2 {
   grid-area: m2;
-  border-top: 1px solid black;
+  border-top: 1px solid white;
+  border-right: 1px solid white;
 }
 
 #m3 {
   grid-area: m3;
-  border-top: 1px solid black;
+  border-top: 1px solid white;
+  border-right: 1px solid white;
 }
 
 #move-area-2 {
@@ -148,22 +163,27 @@
     "m4 m5 m6"
     "m4 m5 m6";
   grid-area: move-area-2;
+  border-bottom: 1px solid white;
+  border-radius: 10px;
 }
 
 #m4 {
   grid-area: m4;
-  border-left: 1px solid black;
+  border-left: 1px solid white;
 }
 
 #m5 {
   grid-area: m5;
-  border-left: 1px solid black;
+  border-left: 1px solid white;
+
 }
 
 #m6 {
   grid-area: m6;
-  border-left: 1px solid black;
-  border-right: 1px solid black
+  border-left: 1px solid white;
+  border-right: 1px solid white;
+
+
 }
 
 #move-area-3 {
@@ -181,18 +201,24 @@
 
 #m7 {
   grid-area: m7;
-  border-bottom: 1px solid black;
-  border-top: 1px solid black;
+  border-left: 1px solid white;
+  border-bottom: 1px solid white;
+  border-top: 1px solid white;
+
+
 }
 
 #m8 {
   grid-area: m8;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
+
+
 }
 
 #m9 {
   grid-area: m9;
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid white;
+
 }
 
 #move-area-4 {
@@ -210,22 +236,26 @@
 
 #m10 {
   grid-area: m10;
-  border-right: 1px solid black;
-  border-left: 1px solid black;
+  border-right: 1px solid white;
+
 }
 
 #m11 {
   grid-area: m11;
-  border-left: 1px solid black;
+  border-right: 1px solid white;
+
 }
 
 #m12 {
   grid-area: m12;
-  border-left: 1px solid black;
+  border-right: 1px solid white;
+
 }
 
 #start-spot {
   grid-area: start-spot;
+  border-right: 1px solid white;
+  border-top: 1px solid white;
 }
 
 #jail {
@@ -242,22 +272,12 @@
 
 #guesslist1 {
   grid-area: guesslist1;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  border-left: 1px solid black;
-  border-radius: 8px;
-  background-color: #001219;
   color: #ff1500;
 
 }
 
 #guesslist2 {
   grid-area: guesslist2;
-  border-top: 1px solid black;
-  border-bottom: 1px solid black;
-  border-right: 1px solid black;
-  border-radius: 8px;
-  background-color: #001219;
   color: #ff1500
 }
 
@@ -318,40 +338,6 @@ div.col {
   display: flex;
   flex-direction: row;
 }
-
-
-/* Smartphones (portrait and landscape) ----------- */
-@media only screen and (min-device-width : 320px) and (max-device-width : 480px) {}
-
-/* Smartphones (landscape) ----------- */
-@media only screen and (min-width : 321px) {}
-
-/* Smartphones (portrait) ----------- */
-@media only screen and (max-width : 320px) {}
-
-/* iPads (portrait and landscape) ----------- */
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) {}
-
-/* iPads (landscape) ----------- */
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : landscape) {}
-
-/* iPads (portrait) ----------- */
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (orientation : portrait) {}
-
-/* iPad 3 (portrait and landscape) ----------- */
-@media only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (-webkit-min-device-pixel-ratio : 2),
-only screen and (min-device-width : 768px) and (max-device-width : 1024px) and (min-resolution: 192dpi) {}
-
-/* Desktops and laptops ----------- */
-@media only screen and (min-width : 1224px) {}
-
-/* Large screens ----------- */
-@media only screen and (min-width : 1824px) {}
-
-/* Retina displays ----------- */
-@media only screen and (-webkit-min-device-pixel-ratio : 2),
-only screen and (min-resolution: 192dpi) {}
-
 .slide-fwd-center {
   -webkit-animation: slide-fwd-center 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s 5 both;
   animation: slide-fwd-center 3s cubic-bezier(0.250, 0.460, 0.450, 0.940) 1s 5 both;
@@ -382,19 +368,19 @@ only screen and (min-resolution: 192dpi) {}
 }
 
 .piece1 {
-  margin-top: 20px;
-  margin-left: 10px;
+  margin-top: 40px;
+  margin-left: 30px;
   float: left;
-  max-width: 30%;
-  max-height: 30%;
+  max-width: 25%;
+  max-height: 25%;
 }
 
 .piece2 {
-  margin-top: 20px;
-  margin-right: 10px;
+  margin-top: 40px;
+  margin-right: 40px;
   float: right;
-  max-width: 30%;
-  max-height: 30%;
+  max-width: 25%;
+  max-height: 25%;
 
 }
 
@@ -408,6 +394,91 @@ only screen and (min-resolution: 192dpi) {}
 li {
   list-style-type: none;
   text-align: center;
-  margin-right: 2px;
+  margin-right:40px;
   color: red;
+  font-size: 1.8em;
+  overflow-y: auto;
+  position: relative;
+
+}
+
+#info-text {
+  margin: 5px;
+}
+
+body {
+  background: black;
+}
+
+@-webkit-keyframes hvr-pop {
+  50% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+}
+@keyframes hvr-pop {
+  50% {
+    -webkit-transform: scale(1.2);
+    transform: scale(1.2);
+  }
+}
+.hvr-pop {
+  display: inline-block;
+  vertical-align: middle;
+  -webkit-transform: perspective(1px) translateZ(0);
+  transform: perspective(1px) translateZ(0);
+  box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+}
+.hvr-pop:hover, .hvr-pop:focus, .hvr-pop:active {
+  -webkit-animation-name: hvr-pop;
+  animation-name: hvr-pop;
+  -webkit-animation-duration: 0.3s;
+  animation-duration: 0.3s;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: 1;
+  animation-iteration-count: 1;
+}
+
+#m1:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m2:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m3:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m4:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m5:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m5:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m5:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m6:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m7:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m8:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m9:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m10:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m11:hover {
+  animation: hvr-pop 1s infinite;
+}
+#m12:hover {
+  animation: hvr-pop 1s infinite;
 }

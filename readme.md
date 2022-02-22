@@ -21,7 +21,7 @@
     <a href="https://github.com/PrinceJonaa/Guess-The-Number-Board"><strong>Documentation »</strong></a>
     <br />
     <br />
-    <a href="https://princejonaa.github.io/Guess-The-Number-Board/">View Demo</a>
+    <a href="https://guess-the-number-board.surge.sh">View Demo</a>
     ·
     <a href="https://github.com/PrinceJonaa/Guess-The-Number-Board/issues">Report Bug</a>
     ·
@@ -68,13 +68,20 @@ This is my unit one project for the semester. I am using all of my previous know
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 <!-- Movivation -->
-## Motivation
+### Motivation
 
 I wanted a quick game that I could make for my class. I wanted to make a game that is fast-paced yet challenging enough to promote something fun to do with others.
 
+
+### Photo Demonstration
+
+<img src="/src/images/demo.png">
+
+<p align="right">(<a href="#top">back to top</a>)</p>
+
 ### Prerequisites
 
-None! Just run the demo or clone the repository  and start playing!
+None! Just run the demo or clone the repository and start playing!
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -87,6 +94,7 @@ None! Just run the demo or clone the repository  and start playing!
 * Adding more questions!
 * Adding animations!
 * Adding guess range!
+* Make website responsive
 
 See the [open issues](https://github.com/PrinceJonaa/Guess-The-Number-Board/issues) for a full list of proposed features (and known issues).
 

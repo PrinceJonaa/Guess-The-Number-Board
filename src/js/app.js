@@ -109,6 +109,8 @@ const locationArray = [
   m12,
 ];
 
+const guessListArray = document.querySelectorAll('li');
+
 //=========================================
 // Event Listeners
 //=========================================
@@ -125,7 +127,6 @@ guessSubmitBtn.addEventListener("click", guessSubmit);
 
 function startGame() {
   secretNum = Math.floor(Math.random() * 5) + 1;
-  console.log("SN " + secretNum);
   startArea.appendChild(player1Piece);
   startArea.appendChild(player2Piece);
   player1BoardLocation = 0;
@@ -135,59 +136,40 @@ function startGame() {
   playerTurn = player1Turn;
   textInfo.innerHTML = "Player 1 will start the game.";
   player1Name.innerHTML = "Player 1's Turn";
-  player1Name.style.color = "red";
+  player1Name.style.color = "yellow";
+  player2Name.style.color = "red";
   startGameBtn.style.display = "none";
-}
-
-function guessSubmit() {
-  // validateGuess();
-  // if (playerTurn === player1Turn) {
-  //   player1Guess = parseInt(guessTextBox.value);
-  //   guessTextBox.value = "";
-  //   checkPlayerGuess();
-  // } else if (playerTurn === player2Turn) {
-  //   player2Guess = parseInt(guessTextBox.value);
-  //   guessTextBox.value = "";
-  //   checkPlayerGuess();
-  // }
   Swal.fire({
-    title: "Enter a number between 1 and 5",
-    input: 'text',
-    inputLabel: 'Enter your name',
-    inputValue: player1Guess,
-    confirmButtonText: "Save",
-    denyButtonText: `Don't save`,
-  }).then((result) => {
-    /* Read more about isConfirmed, isDenied below */
-    if (result.isConfirmed) {
-      Swal.fire("Saved!", "", "success");
-      checkPlayerGuess();
-    } else if (result.isDenied) {
-      Swal.fire("Changes are not saved", "", "info");
-    }
+    icon: "question",
+    title: "How to play!",
+    text: "Guess a number 1 to 5. First player to guess 15 times wins! Answer questions as you go along.",
+    width: 600,
+    padding: "3em",
   });
 }
 
-// function render() {
-//   console.log('check player guess')
-//   checkPlayerGuess();
-//   console.log('update player piece location')
-//   updatePlayerPieceLocation();
-//   console.log('check for event location')
-//   // checkForEventLocation();
-//   console.log('update player piece location')
-//   updatePlayerPieceLocation();
-//   console.log('check for win')
-//   checkWin();
-//   console.log('new secret num')
-//   newSecretNum();
-//   questionEvent();
-//   console.log('change player turn')
-//   changePlayerTurn();
-// }
+async function guessSubmit() {
+  validateGuess();
+  if (playerTurn === player1Turn) {
+    player1Guess = parseInt(guessTextBox.value);
+    guessTextBox.value = "";
+    await render();
+  } else if (playerTurn === player2Turn) {
+    player2Guess = parseInt(guessTextBox.value);
+    guessTextBox.value = "";
+    await render();
+  }
+}
 
-
-
+async function render() {
+  checkPlayerGuess();
+  updatePlayerPieceLocation();
+  await checkForEventLocation();
+  updatePlayerPieceLocation();
+  checkWin();
+  newSecretNum();
+  changePlayerTurn();
+}
 
 function updatePlayerPieceLocation() {
   locationArray.forEach((square, idx) => {
@@ -197,14 +179,28 @@ function updatePlayerPieceLocation() {
     if (player2BoardLocation === idx) {
       locationArray[idx].appendChild(player2Piece);
     }
-    checkForEventLocation();
   });
 }
 
 function checkWin() {
-  if (player1BoardLocation === 15) {
+  if (player1BoardLocation === 1) {
     player1Win = true;
     player1Name.innerHTML = "Player 1 Wins!";
+    player2Name.innerHTML = ""
+    Swal.fire({
+      title: `Congratulations! Player 1 has won the game!`,
+      icon: "success",
+      width: 600,
+      padding: "3em",
+      color: "#716add",
+      background: "#fff url(/images/trees.png)",
+      backdrop: `
+    rgba(0,0,123,0.4)
+    url("https://media1.giphy.com/media/n8Ax3aMOsBX32/giphy.gif?cid=ecf05e47zsggje036lreosassflt88zcs8ob7pkaj1p4jetg&rid=giphy.gif&ct=s")
+    left top
+    no-repeat
+  `,
+    });
     confettiStart();
     setTimeout(function () {
       confettiStop();
@@ -212,22 +208,32 @@ function checkWin() {
   } else if (player2BoardLocation === 15) {
     player2Win = true;
     player2Name.innerHtml = "Player 2 Wins!";
+    Swal.fire({
+      title: `Congratulations! Player 2 has won the game!`,
+      icon: "success",
+      width: 600,
+      padding: "3em",
+      color: "#716add",
+      background: "#fff url(/images/trees.png)",
+      backdrop: `
+    rgba(0,0,123,0.4)
+    url("https://media1.giphy.com/media/n8Ax3aMOsBX32/giphy.gif?cid=ecf05e47zsggje036lreosassflt88zcs8ob7pkaj1p4jetg&rid=giphy.gif&ct=s")
+    left top
+    no-repeat
+  `,
+    });
     confettiStart();
     setTimeout(function () {
       confettiStop();
     }, 5000);
-  } else {
-    newSecretNum();
   }
 }
 
 function changePlayerTurn() {
   if (playerTurn === player1Turn) {
     playerTurn = player2Turn;
-    console.log("Player 2's Turn");
   } else if (playerTurn === player2Turn) {
     playerTurn = player1Turn;
-    console.log("Player 1's Turn");
   }
 }
 
@@ -237,21 +243,22 @@ function newSecretNum() {
   player1GuessAmount = 0;
   player2GuessAmount = 0;
   secretNum = Math.floor(Math.random() * 5) + 1;
-  console.log("SN2" + secretNum);
-  changePlayerTurn();
 }
 
 function checkPlayerGuess() {
   if (playerTurn === player1Turn) {
-    console.log("Player 1's Turn")
     player1GuessAmount += 1;
     let player1GuessBullet = document.createElement("li");
+    player1GuessBullet.className = "list-group-item";
     player1GuessBullet.innerHTML = player1Guess;
     player1GuessList.appendChild(player1GuessBullet);
+    if (guessListArray.length === 5) {
+      player1GuessList.removeChild(player1GuessList.firstChild);
+    }
     player1Name.innerHTML = "Player 1's Turn:";
-    player1Name.style.color = "red";
+    player1Name.style.color = "yellow";
     player2Name.innerHTML = "Player 2:";
-    player2Name.style.color = "black";
+    player2Name.style.color = "red";
 
     if (player1Guess === secretNum) {
       let player1HTMLScore = parseInt(player1ScoreBoard.textContent);
@@ -260,27 +267,35 @@ function checkPlayerGuess() {
       player1ScoreBoard.textContent = player1HTMLScore;
       player1BoardLocation += 1;
       textInfo.innerHTML = `Player 1 has guessed the secret number ${secretNum} and moves on to the next spot!`;
+      player1GuessBullet.className = "list-group-item list-group-item-success"
       player1GuessBullet.style = "color: green";
       player1Name.innerHTML = "Player 1:";
-      player1Name.style.color = "black";
+      player1Name.style.color = "yellow";
       player2Name.innerHTML = "Player 2's Turn:";
       player2Name.style.color = "red";
 
     } else {
       textInfo.innerHTML = "Player 1 have guessed the wrong number!";
+      player1GuessBullet.className = "list-group-item list-group-item-danger";
+      player2Name.innerHTML = "Player 2's Turn:";
+      player2Name.style.color = "red";
+      player1Name.innerHTML = "Player 1:";
+      player1Name.style.color = "yellow";
     }
 
   } else if (playerTurn === player2Turn) {
     player1Name.innerHTML = "Player 1:";
-    player1Name.style.color = "black";
+    player1Name.style.color = "red";
     player2Name.innerHTML = "Player 2's Turn:";
-    player2Name.style.color = "red";
-    console.log("Player 2's Turn")
+    player2Name.style.color = "yellow";
     player2GuessAmount += 1;
-    player2Name.innerHTML = "Player 2's Turn:";
     let player2GuessBullet = document.createElement("li");
+    player2GuessBullet.className = "list-group-item";
     player2GuessBullet.innerHTML = player2Guess;
     player2GuessList.appendChild(player2GuessBullet);
+    if (guessListArray === 5) {
+      player2GuessList.removeChild(player2GuessList.firstChild);
+    }
 
     if (player2Guess === secretNum) {
       let player2HTMLScore = parseInt(player2ScoreBoard.textContent);
@@ -289,59 +304,54 @@ function checkPlayerGuess() {
       player2ScoreBoard.textContent = player2HTMLScore;
       player2BoardLocation += 1;
       textInfo.innerHTML = `Player 2 has guessed the secret number ${secretNum} and moves on to the next spot!`;
+      player2GuessBullet.className = "list-group-item list-group-item-success"
       player2GuessBullet.style = "color: green"
       player2Name.innerHTML = "Player 2:";
-      player2Name.style.color = "black";
+      player2Name.style.color = "red";
       player1Name.innerHTML = "Player 1's Turn:";
-      player1Name.style.color = "red";
+      player1Name.style.color = "yellow";
     } else {
       textInfo.innerHTML = "Player 2 have guessed the wrong number!"
       player1Name.innerHTML = "Player 1's Turn:";
-
+      player2Name.innerHTML = "Player 2:";
+      player2GuessBullet.className = "list-group-item list-group-item-danger";
     }
   }
-  updatePlayerPieceLocation();
 }
 
-
-
-function checkForEventLocation() {
-  if (player2BoardLocation === 1 || player2BoardLocation === 8 || player2BoardLocation === 12) {
+async function checkForEventLocation() {
+  if (player2BoardLocation === 4 || player2BoardLocation === 8 || player2BoardLocation === 12) {
     trueBtn.style.display = "block";
     falseBtn.style.display = "block";
-    questionEvent();
-  } else if (player1BoardLocation === 1 || player1BoardLocation === 8 || player1BoardLocation === 12) {
+    activeEvent = true;
+    activeEvent = await questionEvent();
+  } else if (player1BoardLocation === 4 || player1BoardLocation === 8 || player1BoardLocation === 12) {
     trueBtn.style.display = "block";
     falseBtn.style.display = "block";
-    questionEvent();
+    activeEvent = true;
+    activeEvent = await questionEvent();
   }
-  checkWin();
 }
 
 function validateGuess() {
   if (guessTextBox.value > 5 || guessTextBox.value < 1 || !Number.isInteger(parseInt(guessTextBox.value))) {
     alert("Please enter a number between 1 and 5! Turn Skipped.");
   }
-  console.log(guessTextBox.value);
 }
 
-function questionEvent() {
+async function questionEvent() {
   const randomQuestion =
     randomQuestions[Math.floor(Math.random() * randomQuestions.length)];
-  // textInfo.innerHTML = randomQuestion.question;
   correctAnswer = randomQuestion.correctAnswer;
-  activeEvent = true;
 
-  Swal.fire({
+  await Swal.fire({
     title: `${randomQuestion.question}`,
     showDenyButton: true,
     confirmButtonText: "True",
     denyButtonText: "False",
   }).then((result) => {
-    /* Read more about isConfirmed, isDenied below */
     if (result.isConfirmed) {
       if (playerTurn === player1Turn) {
-        console.log(playerTurn);
         if (correctAnswer) {
           Swal.fire(`The correct answer is ${correctAnswer}.`, "", "success");
           player1BoardLocation += 1;
@@ -350,7 +360,6 @@ function questionEvent() {
           player1BoardLocation -= 1;
         }
       } else if (playerTurn === player2Turn) {
-        console.log(playerTurn);
         if (correctAnswer) {
           Swal.fire(`The correct answer is ${correctAnswer}.`, "", "success");
           player2BoardLocation += 1;
@@ -362,7 +371,6 @@ function questionEvent() {
       activeEvent = false;
     } else if (result.isDenied) {
       if (playerTurn === player1Turn) {
-        console.log(playerTurn);
         if (!correctAnswer) {
           Swal.fire(`The correct answer is ${correctAnswer}.`, "", "success");
           player1BoardLocation += 1;
@@ -371,7 +379,6 @@ function questionEvent() {
           player1BoardLocation -= 1;
         }
       } else if (playerTurn === player2Turn) {
-        console.log(playerTurn);
         if (!correctAnswer) {
           Swal.fire(`The correct answer is ${correctAnswer}.`, "", "success");
           player2BoardLocation += 1;
@@ -381,94 +388,47 @@ function questionEvent() {
         }
       }
     }
-    updatePlayerPieceLocation();
+  });
+  return new Promise((resolve) => {
+    resolve((activeEvent = false));
   });
 };
-
-
-
-// trueBtn.addEventListener("click", function () {
-//   console.log("True");
-//   if (playerTurn === player1Turn) {
-//     console.log(playerTurn);
-//     if (correctAnswer) {
-//       console.log(correctAnswer);
-//       player1BoardLocation += 1;
-//     } else {
-//       console.log(correctAnswer);
-//       player1BoardLocation -= 1;
-//     }
-//   } else if (playerTurn === player2Turn) {
-//     console.log(playerTurn);
-//     if (correctAnswer) {
-//       console.log(correctAnswer);
-//       player2BoardLocation += 1;
-//     } else {
-//       console.log(correctAnswer);
-//       player2BoardLocation -= 1;
-//     }
-//   }
-//   updatePlayerPieceLocation();
-//   activeEvent = false;
-// });
-
-//   falseBtn.addEventListener("click", function () {
-//     console.log("False");
-//     if (playerTurn === player1Turn) {
-//       console.log(playerTurn);
-//       if (!correctAnswer) {
-//         console.log(correctAnswer);
-//         player1BoardLocation += 1;
-//       } else {
-//         console.log(correctAnswer);
-//         player1BoardLocation -= 1;
-//       }
-//     } else if (playerTurn === player2Turn) {
-//       console.log(playerTurn);
-//       if (!correctAnswer) {
-//         console.log(correctAnswer);
-//         player2BoardLocation += 1;
-//       } else {
-//         console.log(correctAnswer);
-//         player1BoardLocation -= 1;
-//       }
-//     }
-//     updatePlayerPieceLocation();
-//     activeEvent = false;
-//   });
-//   // while (activeEvent) {
-//   //   // waiting
-
-//   // }
-
-// }
-
-
-
-
-
 
 //==========================
 // Events & Challenges
 // =========================
 
 
-const randomQuestions = [{
+const randomQuestions = [
+  {
     question: `JavaScript is a compiled language used to make the website interactive`,
-    correctAnswer: false
+    correctAnswer: false,
   },
   {
-    question: `\<script file=\"xxx.js\"\>`,
-    correctAnswer: false
+    question: `A promise is a special JavaScript function.`,
+    correctAnswer: false,
   },
   {
     question: "`//This is a comment`",
-    correctAnswer: true
+    correctAnswer: true,
   },
   {
     question: "`/*This is a comment*/`",
-    correctAnswer: true
-  }
+    correctAnswer: true,
+  },
+  {
+    question: "To remove elements from the array use splice.",
+    correctAnswer: false,
+  },
+  {
+    question: "We use flexbox to create un-responsive designs.",
+    correctAnswer: false,
+  },
+  {
+    question:
+      "An element is considered a descendant if it is nested anywhere within its ancestor.`",
+    correctAnswer: true,
+  },
 ];
 
 //=========================
