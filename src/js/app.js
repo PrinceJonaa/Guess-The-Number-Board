@@ -125,8 +125,6 @@ resetBtn.addEventListener("click", resetGame);
 // Functions
 //=========================================
 
-// When someone hits the start button, check who turn it is and change the info area. Update the image to the start area.
-
 function resetGame() {
   startGameBtn.style.display = "block";
   guessTextBox.value = "";
