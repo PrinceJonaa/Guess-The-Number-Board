@@ -119,11 +119,32 @@ startGameBtn.addEventListener("click", startGame);
 
 guessSubmitBtn.addEventListener("click", guessSubmit);
 
+resetBtn.addEventListener("click", resetGame);
+
 //=========================================
 // Functions
 //=========================================
 
 // When someone hits the start button, check who turn it is and change the info area. Update the image to the start area.
+
+function resetGame() {
+  startGameBtn.style.display = "block";
+  guessTextBox.value = "";
+  player1GuessAmount = 0;
+  player2GuessAmount = 0;
+  player1BoardLocation = 0;
+  player2BoardLocation = 0;
+  player1Win = false;
+  player2Win = false;
+  playerTurn = player1Turn;
+  textInfo.innerHTML = "";
+  player1Name.innerHtml = "Player 1:";
+  player2Name.innerHTML = "Player 2:";
+  player1Name.style.color = "grey";
+  player2Name.style.color = "grey";
+  player1Piece.remove();
+  player2Piece.remove();
+}
 
 function startGame() {
   secretNum = Math.floor(Math.random() * 5) + 1;
@@ -399,8 +420,7 @@ async function questionEvent() {
 // =========================
 
 
-const randomQuestions = [
-  {
+const randomQuestions = [{
     question: `JavaScript is a compiled language used to make the website interactive`,
     correctAnswer: false,
   },
@@ -425,8 +445,7 @@ const randomQuestions = [
     correctAnswer: false,
   },
   {
-    question:
-      "An element is considered a descendant if it is nested anywhere within its ancestor.`",
+    question: "An element is considered a descendant if it is nested anywhere within its ancestor.`",
     correctAnswer: true,
   },
 ];
